@@ -1,0 +1,2539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Asif.dev — MERN Stack &amp; Shopify Developer</title>
+<meta name="description" content="Asif Shah Diner — full-stack developer in Dhaka building fast, modern, high-converting web experiences with the MERN stack & Shopify 2.0.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3f6fb;
+  --bg-2:#eef2fa;
+  --navy:#101a33;
+  --navy-soft:#2b3554;
+  --muted:#5c6478;
+  --blue:#4f6bff;
+  --purple:#8b5cf6;
+  --grad: linear-gradient(120deg, var(--blue), var(--purple));
+  --glass-bg: rgba(255,255,255,0.55);
+  --glass-bg-strong: rgba(255,255,255,0.75);
+  --glass-border: rgba(255,255,255,0.75);
+  --glass-shadow: 0 8px 32px rgba(31,45,90,0.10);
+  --radius-lg: 28px;
+  --radius-md: 20px;
+  --radius-sm: 14px;
+  --header-h: 84px;
+  --container: 1240px;
+  --ease: cubic-bezier(.22,.75,.28,1);
+  color-scheme: light;
+}
+
+html.dark{
+  --bg:#0a0e1a;
+  --bg-2:#0d1220;
+  --navy:#f2f5fc;
+  --navy-soft:#c7cee4;
+  --muted:#8b93ac;
+  --blue:#7c93ff;
+  --purple:#a78bfa;
+  --glass-bg: rgba(20,26,46,0.55);
+  --glass-bg-strong: rgba(20,26,46,0.72);
+  --glass-border: rgba(255,255,255,0.09);
+  --glass-shadow: 0 8px 36px rgba(0,0,0,0.45);
+  color-scheme: dark;
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  font-family:'Plus Jakarta Sans', 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+  background:var(--bg);
+  color:var(--navy);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  transition:background .4s var(--ease), color .4s var(--ease);
+  min-height:100vh;
+  position:relative;
+}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;}
+ul{margin:0;padding:0;list-style:none;}
+h1,h2,h3,p{margin:0;}
+.container{max-width:var(--container);margin:0 auto;padding:0 20px;}
+@media(min-width:640px){.container{padding:0 32px;}}
+@media(min-width:1024px){.container{padding:0 40px;}}
+
+/* Focus visibility */
+a:focus-visible, button:focus-visible, [tabindex]:focus-visible{
+  outline:2px solid var(--blue);
+  outline-offset:3px;
+  border-radius:8px;
+}
+
+::selection{background:rgba(79,107,255,0.25);}
+
+/* ===== Background atmosphere ===== */
+.bg-atmos{
+  position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none;
+  background:
+    radial-gradient(ellipse 90% 60% at 15% 0%, rgba(120,140,255,0.14), transparent 60%),
+    radial-gradient(ellipse 70% 50% at 90% 15%, rgba(160,120,255,0.12), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 50% 100%, rgba(120,180,255,0.10), transparent 60%),
+    linear-gradient(180deg, var(--bg), var(--bg-2));
+  transition:background .4s var(--ease);
+}
+.blob{
+  position:absolute;
+  border-radius:50%;
+  filter:blur(60px);
+  opacity:.55;
+  background:radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9), rgba(150,170,255,0.35) 60%, transparent 75%);
+  animation:float-blob 22s ease-in-out infinite;
+}
+html.dark .blob{
+  background:radial-gradient(circle at 30% 30%, rgba(124,147,255,0.35), rgba(167,139,250,0.18) 60%, transparent 75%);
+  opacity:.5;
+}
+.blob-1{width:420px;height:420px;top:-140px;left:-120px;animation-delay:0s;}
+.blob-2{width:340px;height:340px;top:10%;right:-100px;animation-delay:-6s;}
+.blob-3{width:300px;height:300px;bottom:5%;left:5%;animation-delay:-12s;}
+.blob-4{width:260px;height:260px;bottom:-80px;right:10%;animation-delay:-3s;}
+@keyframes float-blob{
+  0%,100%{transform:translate(0,0) scale(1);}
+  33%{transform:translate(30px,-25px) scale(1.06);}
+  66%{transform:translate(-20px,20px) scale(0.96);}
+}
+@media(prefers-reduced-motion: reduce){
+  .blob{animation:none;}
+}
+
+/* ===== Custom cursor ===== */
+.cursor-dot, .cursor-ring{
+  position:fixed; top:0; left:0; z-index:9999;
+  pointer-events:none;
+  border-radius:50%;
+  transform:translate(-50%,-50%);
+  will-change:transform;
+}
+.cursor-dot{
+  width:8px;height:8px;
+  background:linear-gradient(135deg, var(--blue), var(--purple));
+  box-shadow:0 0 8px rgba(120,140,255,0.6);
+}
+.cursor-ring{
+  width:34px;height:34px;
+  border:1.5px solid rgba(120,140,255,0.55);
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(2px);
+  transition:width .25s var(--ease), height .25s var(--ease), border-color .25s var(--ease), background .25s var(--ease);
+}
+.cursor-ring.hovering{
+  width:52px;height:52px;
+  border-color:rgba(139,92,246,0.7);
+  background:rgba(139,92,246,0.08);
+}
+.no-cursor .cursor-dot, .no-cursor .cursor-ring{display:none;}
+@media (hover:hover) and (pointer:fine){
+  body:not(.no-cursor){cursor:none;}
+  body:not(.no-cursor) a, body:not(.no-cursor) button{cursor:none;}
+}
+
+.ripple{
+  position:fixed; z-index:9998; pointer-events:none;
+  border-radius:50%;
+  border:1.5px solid rgba(120,140,255,0.5);
+  transform:translate(-50%,-50%);
+  animation:ripple-out .6s var(--ease) forwards;
+}
+@keyframes ripple-out{
+  0%{width:0;height:0;opacity:.6;}
+  100%{width:70px;height:70px;opacity:0;}
+}
+
+/* ===== Glass utility ===== */
+.glass{
+  background:var(--glass-bg);
+  backdrop-filter:blur(20px) saturate(140%);
+  -webkit-backdrop-filter:blur(20px) saturate(140%);
+  border:1px solid var(--glass-border);
+  box-shadow:var(--glass-shadow);
+}
+.glass-strong{
+  background:var(--glass-bg-strong);
+  backdrop-filter:blur(24px) saturate(150%);
+  -webkit-backdrop-filter:blur(24px) saturate(150%);
+  border:1px solid var(--glass-border);
+  box-shadow:var(--glass-shadow);
+}
+
+/* ===== Reveal on scroll ===== */
+.reveal{
+  opacity:0;
+  transform:translateY(28px);
+  filter:blur(6px);
+  transition:opacity .8s var(--ease), transform .8s var(--ease), filter .8s var(--ease);
+}
+.reveal.in-view{
+  opacity:1; transform:translateY(0); filter:blur(0);
+}
+@media(prefers-reduced-motion: reduce){
+  .reveal{opacity:1;transform:none;filter:none;transition:none;}
+}
+
+/* ===== Buttons ===== */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:14px 24px;
+  border-radius:999px;
+  font-weight:600;
+  font-size:15px;
+  border:none;
+  cursor:pointer;
+  transition:transform .3s var(--ease), box-shadow .3s var(--ease), background .3s var(--ease);
+  white-space:nowrap;
+  min-height:48px;
+}
+.btn-primary{
+  background:var(--grad);
+  color:#fff;
+  box-shadow:0 10px 24px rgba(79,107,255,0.32);
+}
+.btn-primary:hover{transform:translateY(-2px); box-shadow:0 14px 30px rgba(79,107,255,0.4);}
+.btn-ghost{
+  background:var(--glass-bg-strong);
+  color:var(--navy);
+  border:1px solid var(--glass-border);
+}
+.btn-ghost:hover{transform:translateY(-2px);}
+.btn svg{width:16px;height:16px;flex-shrink:0;}
+
+/* Eyebrow labels */
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:12.5px; font-weight:700; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--blue);
+}
+
+/* ===== Header ===== */
+.site-header{
+  position:sticky; top:0; z-index:500;
+  padding:14px 0;
+}
+.header-inner{
+  max-width:var(--container);
+  margin:0 auto;
+  padding:0 16px;
+}
+@media(min-width:640px){.header-inner{padding:0 24px;}}
+.nav-bar{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:16px;
+  padding:12px 16px;
+  border-radius:999px;
+  transition:background .3s var(--ease), box-shadow .3s var(--ease), backdrop-filter .3s var(--ease);
+}
+.site-header.scrolled .nav-bar{
+  background:var(--glass-bg-strong);
+  backdrop-filter:blur(26px) saturate(160%);
+  -webkit-backdrop-filter:blur(26px) saturate(160%);
+  box-shadow:0 10px 30px rgba(31,45,90,0.14);
+}
+.site-header:not(.scrolled) .nav-bar{
+  background:var(--glass-bg);
+  backdrop-filter:blur(16px) saturate(140%);
+  -webkit-backdrop-filter:blur(16px) saturate(140%);
+  border:1px solid var(--glass-border);
+}
+.brand{
+  display:flex; align-items:center; gap:9px;
+  font-weight:800; font-size:17px; letter-spacing:-.01em;
+  flex-shrink:0;
+}
+.brand-mark{
+  width:30px;height:30px; border-radius:9px;
+  background:var(--grad);
+  display:flex; align-items:center; justify-content:center;
+  color:#fff; font-weight:800; font-size:15px;
+  flex-shrink:0;
+}
+.nav-links{
+  display:none;
+  align-items:center; gap:4px;
+}
+.nav-links a{
+  padding:9px 14px;
+  border-radius:999px;
+  font-size:14.5px; font-weight:600;
+  color:var(--navy-soft);
+  transition:color .2s var(--ease), background .2s var(--ease);
+}
+.nav-links a:hover{color:var(--navy); background:rgba(120,140,255,0.10);}
+@media(min-width:960px){
+  .nav-links{display:flex;}
+}
+.nav-right{display:flex; align-items:center; gap:8px; flex-shrink:0;}
+.nav-cta{display:none;}
+@media(min-width:960px){.nav-cta{display:inline-flex; padding:11px 20px; font-size:14px;}}
+
+.theme-toggle{
+  width:40px;height:40px; border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--glass-border);
+  background:var(--glass-bg-strong);
+  cursor:pointer;
+  color:var(--navy);
+  flex-shrink:0;
+  transition:transform .3s var(--ease);
+}
+.theme-toggle:hover{transform:rotate(15deg);}
+.theme-toggle svg{width:18px;height:18px;}
+.icon-sun{display:none;}
+html.dark .icon-moon{display:none;}
+html.dark .icon-sun{display:block;}
+
+.hamburger{
+  width:40px;height:40px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--glass-border);
+  background:var(--glass-bg-strong);
+  cursor:pointer;
+  flex-shrink:0;
+}
+.hamburger svg{width:18px;height:18px;color:var(--navy);}
+@media(min-width:960px){.hamburger{display:none;}}
+
+/* Mobile nav panel */
+.mobile-nav{
+  position:fixed; inset:0; z-index:600;
+  display:flex; flex-direction:column;
+  padding:18px 18px calc(24px + env(safe-area-inset-bottom));
+  opacity:0; pointer-events:none;
+  transition:opacity .3s var(--ease);
+}
+.mobile-nav.open{opacity:1; pointer-events:auto;}
+.mobile-nav-backdrop{
+  position:absolute; inset:0;
+  background:rgba(10,14,26,0.35);
+  backdrop-filter:blur(4px);
+}
+.mobile-nav-panel{
+  position:relative;
+  margin-top:10px;
+  border-radius:26px;
+  padding:20px;
+  display:flex; flex-direction:column;
+  gap:6px;
+  transform:translateY(-16px);
+  transition:transform .35s var(--ease);
+}
+.mobile-nav.open .mobile-nav-panel{transform:translateY(0);}
+.mobile-nav-top{
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:10px;
+}
+.mobile-nav-close{
+  width:38px;height:38px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--glass-border);
+  background:var(--glass-bg-strong);
+}
+.mobile-nav-close svg{width:16px;height:16px;color:var(--navy);}
+.mobile-nav a{
+  padding:15px 14px;
+  border-radius:14px;
+  font-size:17px; font-weight:600;
+  color:var(--navy);
+}
+.mobile-nav a:active{background:rgba(120,140,255,0.12);}
+.mobile-nav .btn{margin-top:8px; width:100%;}
+
+/* ===== HERO ===== */
+.hero{
+  padding:36px 0 20px;
+  position:relative;
+}
+.hero-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:44px;
+  align-items:center;
+}
+@media(min-width:960px){
+  .hero-grid{grid-template-columns:1.08fr 1fr; gap:32px;}
+}
+.hero-left{order:1;}
+.hero-visual{order:2;}
+@media(min-width:960px){
+  .hero-visual{order:2;}
+}
+
+.badge{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:9px 16px;
+  border-radius:999px;
+  font-size:12.5px; font-weight:700; letter-spacing:.04em; text-transform:uppercase;
+  color:var(--navy-soft);
+  margin-bottom:22px;
+}
+.badge-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:#22c55e;
+  box-shadow:0 0 0 3px rgba(34,197,94,0.2);
+  animation:pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot{0%,100%{opacity:1;}50%{opacity:.5;}}
+
+.hero-title{
+  font-size:clamp(2.1rem, 5.6vw, 3.6rem);
+  font-weight:800;
+  line-height:1.09;
+  letter-spacing:-.02em;
+  color:var(--navy);
+  margin-bottom:20px;
+}
+.hero-title .grad-text{
+  background:var(--grad);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.hero-title .soft{color:var(--muted); font-weight:700;}
+
+.hero-desc{
+  font-size:16px;
+  line-height:1.65;
+  color:var(--muted);
+  max-width:480px;
+  margin-bottom:28px;
+}
+
+.hero-cta-row{
+  display:flex; flex-wrap:wrap; gap:14px;
+  margin-bottom:34px;
+}
+.hero-cta-row .btn{flex:1 1 auto; min-width:0;}
+@media(min-width:480px){.hero-cta-row .btn{flex:0 0 auto;}}
+
+.stats-row{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+@media(min-width:480px){.stats-row{gap:14px;}}
+.stat-card{
+  padding:16px 12px;
+  border-radius:var(--radius-sm);
+  text-align:left;
+}
+.stat-num{
+  font-size:clamp(1.3rem,3vw,1.7rem);
+  font-weight:800;
+  color:var(--navy);
+  letter-spacing:-.01em;
+}
+.stat-label{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:600;
+  margin-top:2px;
+  line-height:1.3;
+}
+
+/* Hero visual */
+.hero-visual{
+  position:relative;
+  display:flex;
+  justify-content:center;
+  padding:20px 0;
+}
+.hero-orbit-wrap{
+  position:relative;
+  width:min(340px, 78vw);
+  height:min(340px, 78vw);
+}
+@media(min-width:960px){
+  .hero-orbit-wrap{width:400px; height:400px;}
+}
+.orbit-ring{
+  position:absolute; inset:0;
+  border-radius:50%;
+  border:1.5px dashed rgba(120,140,255,0.35);
+  animation:spin-slow 40s linear infinite;
+}
+.orbit-ring.ring-2{inset:26px; border-style:solid; border-color:rgba(120,140,255,0.18); animation-duration:60s; animation-direction:reverse;}
+@keyframes spin-slow{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+@media(prefers-reduced-motion:reduce){.orbit-ring{animation:none;}}
+
+.hero-photo-frame{
+  position:absolute;
+  inset:38px;
+  border-radius:50%;
+  overflow:hidden;
+  background:linear-gradient(160deg, rgba(255,255,255,0.6), rgba(180,190,255,0.25));
+  border:1px solid var(--glass-border);
+  box-shadow:0 20px 50px rgba(60,80,180,0.18), inset 0 0 40px rgba(255,255,255,0.4);
+  animation:float-y 6s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes float-y{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+@media(prefers-reduced-motion:reduce){.hero-photo-frame{animation:none;}}
+.hero-photo-frame img{
+  width:100%;height:100%;object-fit:cover;object-position:center top;
+}
+
+.float-bubble{
+  position:absolute;
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 10px 24px rgba(60,80,180,0.16);
+  animation:float-y 5s ease-in-out infinite;
+}
+.float-bubble svg, .float-bubble img{width:52%; height:52%;}
+.bubble-1{width:56px;height:56px; top:2%; left:6%; animation-delay:.2s;}
+.bubble-2{width:52px;height:52px; top:14%; right:-2%; animation-delay:1.1s;}
+.bubble-3{width:44px;height:44px; bottom:6%; right:8%; animation-delay:.6s;}
+@media(min-width:960px){
+  .bubble-1{width:62px;height:62px;}
+  .bubble-2{width:58px;height:58px;}
+  .bubble-3{width:48px;height:48px;}
+}
+
+.hero-chip{
+  position:absolute;
+  bottom:10%;
+  left:50%;
+  transform:translateX(-50%);
+  padding:10px 14px;
+  border-radius:16px;
+  min-width:150px;
+  animation:float-y 7s ease-in-out infinite;
+  animation-delay:.3s;
+}
+.hero-chip-label{font-size:11px; font-weight:700; color:var(--navy); margin-bottom:6px;}
+.hero-chip-icons{display:flex; gap:6px;}
+.hero-chip-icons span{
+  width:22px;height:22px;border-radius:7px;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(120,140,255,0.12);
+}
+.hero-chip-icons svg{width:13px;height:13px;}
+
+/* Tech marquee bar */
+.tech-bar-wrap{margin-top:44px;}
+.tech-bar{
+  display:flex; align-items:center; gap:22px;
+  padding:16px 22px;
+  border-radius:999px;
+  overflow-x:auto;
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+}
+.tech-bar::-webkit-scrollbar{display:none;}
+.tech-bar-label{
+  font-size:13px; font-weight:700; color:var(--muted);
+  white-space:nowrap; flex-shrink:0;
+  padding-right:6px;
+  border-right:1px solid var(--glass-border);
+}
+.tech-item{
+  display:flex; align-items:center; gap:7px;
+  font-size:13.5px; font-weight:600; color:var(--navy-soft);
+  white-space:nowrap; flex-shrink:0;
+}
+.tech-item svg{width:17px;height:17px; flex-shrink:0;}
+.tech-arrow{
+  margin-left:auto; flex-shrink:0;
+  width:30px;height:30px;border-radius:50%;
+  display:none;
+  align-items:center;justify-content:center;
+  background:rgba(120,140,255,0.12);
+  color:var(--blue);
+}
+@media(min-width:640px){.tech-arrow{display:flex;}}
+.tech-arrow svg{width:14px;height:14px;}
+
+/* ===== ABOUT ===== */
+.about-section{padding:76px 0 20px;}
+.about-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:26px;
+  align-items:start;
+}
+@media(min-width:860px){
+  .about-grid{grid-template-columns:1.1fr 1fr; gap:40px; align-items:center;}
+}
+.about-heading{
+  font-size:clamp(1.6rem, 3.6vw, 2.3rem);
+  font-weight:800;
+  line-height:1.22;
+  letter-spacing:-.015em;
+  color:var(--navy);
+}
+.about-heading .grad-text{
+  background:var(--grad);
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+}
+.about-desc{
+  font-size:15.5px; line-height:1.7; color:var(--muted);
+  margin-bottom:22px;
+}
+.chip-row{display:flex; flex-wrap:wrap; gap:10px;}
+.chip{
+  padding:9px 16px;
+  border-radius:999px;
+  font-size:13px; font-weight:600;
+  color:var(--navy-soft);
+}
+
+/* ===== PROJECTS ===== */
+.projects-section{padding:56px 0 30px;}
+.section-head{
+  display:flex; flex-direction:column; gap:18px;
+  margin-bottom:30px;
+}
+@media(min-width:760px){
+  .section-head{flex-direction:row; align-items:flex-end; justify-content:space-between;}
+}
+.section-heading{
+  font-size:clamp(1.6rem, 3.6vw, 2.15rem);
+  font-weight:800;
+  letter-spacing:-.015em;
+  color:var(--navy);
+  margin-top:8px;
+}
+.filter-row{
+  display:flex; flex-wrap:wrap; gap:8px;
+}
+.filter-btn{
+  padding:9px 18px;
+  border-radius:999px;
+  font-size:13.5px; font-weight:600;
+  color:var(--navy-soft);
+  border:1px solid var(--glass-border);
+  background:var(--glass-bg);
+  cursor:pointer;
+  transition:all .25s var(--ease);
+}
+.filter-btn.active{
+  background:var(--grad);
+  color:#fff;
+  border-color:transparent;
+  box-shadow:0 8px 18px rgba(79,107,255,0.3);
+}
+
+.projects-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:22px;
+}
+@media(min-width:640px){
+  .projects-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media(min-width:1024px){
+  .projects-grid{grid-template-columns:repeat(3,1fr); gap:26px;}
+}
+
+.project-card{
+  border-radius:var(--radius-md);
+  overflow:hidden;
+  display:flex; flex-direction:column;
+  cursor:pointer;
+  transition:transform .4s var(--ease), box-shadow .4s var(--ease);
+  opacity:0; transform:translateY(20px) scale(.98);
+  animation:card-in .5s var(--ease) forwards;
+}
+@keyframes card-in{to{opacity:1; transform:translateY(0) scale(1);}}
+@media(hover:hover){
+  .project-card:hover{transform:translateY(-6px); box-shadow:0 20px 44px rgba(31,45,90,0.16);}
+  .project-card:hover .project-thumb img{transform:scale(1.06);}
+}
+.project-thumb{
+  position:relative;
+  aspect-ratio:16/10.5;
+  overflow:hidden;
+  background:linear-gradient(135deg, #1a2036, #2b3554);
+}
+.project-thumb img{width:100%;height:100%;object-fit:cover; transition:transform .5s var(--ease);}
+.project-cat-tag{
+  position:absolute; top:12px; left:12px;
+  padding:5px 12px;
+  border-radius:999px;
+  font-size:11px; font-weight:700;
+  background:rgba(20,26,46,0.55);
+  backdrop-filter:blur(8px);
+  color:#fff;
+  text-transform:capitalize;
+}
+.project-link-icon{
+  position:absolute; top:12px; right:12px;
+  width:32px;height:32px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,0.85);
+  color:#101a33;
+}
+.project-link-icon svg{width:14px;height:14px;}
+.project-body{
+  padding:18px 18px 20px;
+  flex:1;
+  display:flex; flex-direction:column;
+}
+.project-name{font-size:16.5px; font-weight:700; color:var(--navy); margin-bottom:4px;}
+.project-desc{font-size:13.5px; color:var(--muted); margin-bottom:14px; line-height:1.5;}
+.project-footer{
+  margin-top:auto;
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+  flex-wrap:wrap;
+}
+.tech-pills{display:flex; flex-wrap:wrap; gap:6px;}
+.tech-pill{
+  font-size:11px; font-weight:600;
+  padding:4px 10px;
+  border-radius:999px;
+  color:var(--navy-soft);
+  background:rgba(120,140,255,0.10);
+}
+.live-link{
+  display:inline-flex; align-items:center; gap:5px;
+  font-size:12.5px; font-weight:700;
+  color:var(--blue);
+  flex-shrink:0;
+}
+.live-link svg{width:12px;height:12px;}
+
+.view-more-wrap{
+  display:flex; justify-content:center;
+  margin-top:38px;
+}
+.view-more-btn{
+  display:inline-flex; align-items:center; gap:10px;
+}
+.coming-soon{
+  text-align:center;
+  margin-top:38px;
+  padding:26px;
+  border-radius:var(--radius-md);
+  font-size:15px; font-weight:600;
+  color:var(--muted);
+}
+.coming-soon span{
+  display:block;
+  font-size:20px; margin-bottom:6px;
+}
+
+/* ===== IMPACT + TESTIMONIALS ===== */
+.impact-testimonial-section{padding:50px 0;}
+.it-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:20px;
+}
+@media(min-width:900px){
+  .it-grid{grid-template-columns:1fr 1.15fr;}
+}
+.impact-card, .testimonial-card{
+  border-radius:var(--radius-lg);
+  padding:28px 24px;
+}
+.impact-numbers{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:22px;
+  margin-top:18px;
+}
+@media(min-width:480px){.impact-numbers{grid-template-columns:repeat(4,1fr);}}
+.impact-num{
+  font-size:clamp(1.5rem,3.6vw,2rem);
+  font-weight:800;
+  background:var(--grad);
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+}
+.impact-label{font-size:12px; font-weight:600; color:var(--muted); margin-top:2px;}
+
+.testimonial-quote{
+  font-size:15.5px; line-height:1.65; color:var(--navy-soft); font-style:italic;
+  margin:18px 0 20px;
+}
+.testimonial-footer{
+  display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;
+}
+.testimonial-person{display:flex; align-items:center; gap:12px;}
+.testimonial-avatar{
+  width:46px;height:46px;border-radius:50%;
+  background:var(--grad);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff; font-weight:700; font-size:16px;
+  flex-shrink:0;
+}
+.testimonial-name{font-size:14px; font-weight:700; color:var(--navy);}
+.testimonial-role{font-size:12.5px; color:var(--muted);}
+.rating-block{text-align:right;}
+.rating-num{font-size:15px; font-weight:800; color:var(--navy);}
+.stars{color:#f5b100; font-size:12px; letter-spacing:1px;}
+.testimonial-controls{display:flex; gap:8px; margin-top:16px;}
+.t-ctrl{
+  width:34px;height:34px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--glass-border);
+  background:var(--glass-bg-strong);
+  cursor:pointer; color:var(--navy);
+}
+.t-ctrl svg{width:14px;height:14px;}
+
+/* ===== BLOG ===== */
+.blog-section{padding:50px 0;}
+.blog-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:20px;
+  margin-top:28px;
+}
+@media(min-width:640px){.blog-grid{grid-template-columns:repeat(2,1fr);}}
+@media(min-width:1024px){.blog-grid{grid-template-columns:repeat(4,1fr);}}
+.blog-card{
+  border-radius:var(--radius-md);
+  overflow:hidden;
+  transition:transform .35s var(--ease), box-shadow .35s var(--ease);
+}
+@media(hover:hover){.blog-card:hover{transform:translateY(-5px); box-shadow:0 16px 34px rgba(31,45,90,0.14);}}
+.blog-thumb{
+  aspect-ratio:16/10;
+  position:relative;
+  overflow:hidden;
+}
+.blog-thumb img{width:100%;height:100%;object-fit:cover;}
+.blog-cat{
+  position:absolute; top:10px; left:10px;
+  padding:4px 11px; border-radius:999px;
+  font-size:10.5px; font-weight:700;
+  background:rgba(20,26,46,0.55); backdrop-filter:blur(8px); color:#fff;
+}
+.blog-body{padding:16px 16px 18px;}
+.blog-title{font-size:14.5px; font-weight:700; color:var(--navy); line-height:1.4; margin-bottom:10px;}
+.blog-meta{display:flex; justify-content:space-between; font-size:11.5px; color:var(--muted); font-weight:600;}
+
+/* ===== CTA / CONTACT ===== */
+.cta-section{padding:56px 0;}
+.cta-card{
+  border-radius:var(--radius-lg);
+  padding:36px 24px;
+  position:relative;
+  overflow:hidden;
+}
+@media(min-width:640px){.cta-card{padding:48px 44px;}}
+.cta-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:30px;
+  position:relative; z-index:1;
+}
+@media(min-width:900px){.cta-grid{grid-template-columns:1.2fr 0.9fr; align-items:center;}}
+.cta-heading{
+  font-size:clamp(1.7rem,4vw,2.4rem);
+  font-weight:800;
+  letter-spacing:-.015em;
+  color:var(--navy);
+  margin:10px 0 12px;
+}
+.cta-desc{font-size:15px; color:var(--muted); line-height:1.65; max-width:440px; margin-bottom:24px;}
+.cta-btn-row{display:flex; flex-wrap:wrap; gap:12px;}
+.contact-info-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.contact-info-card{
+  padding:14px 14px;
+  border-radius:16px;
+  display:flex; align-items:flex-start; gap:10px;
+}
+.contact-info-icon{
+  width:34px;height:34px;border-radius:10px;
+  background:rgba(120,140,255,0.14);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--blue);
+  flex-shrink:0;
+}
+.contact-info-icon svg{width:16px;height:16px;}
+.contact-info-label{font-size:10.5px; color:var(--muted); font-weight:700; text-transform:uppercase; letter-spacing:.04em;}
+.contact-info-value{font-size:12.5px; font-weight:700; color:var(--navy); margin-top:2px; word-break:break-word;}
+
+.cta-blob-deco{
+  position:absolute;
+  width:220px; height:220px;
+  right:-60px; bottom:-60px;
+  border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, rgba(139,92,246,0.35), rgba(79,107,255,0.15) 60%, transparent 75%);
+  filter:blur(20px);
+  animation:float-y 8s ease-in-out infinite;
+  display:none;
+}
+@media(min-width:900px){.cta-blob-deco{display:block;}}
+
+/* ===== FOOTER ===== */
+.site-footer{padding:56px 0 26px; margin-top:20px;}
+.footer-top{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:36px;
+  padding-bottom:36px;
+  border-bottom:1px solid var(--glass-border);
+}
+@media(min-width:760px){
+  .footer-top{grid-template-columns:1.3fr 1fr 1fr 1.2fr; gap:24px;}
+}
+.footer-brand-desc{font-size:13.5px; color:var(--muted); line-height:1.6; margin:14px 0 18px; max-width:280px;}
+.footer-social{display:flex; gap:10px;}
+.social-icon{
+  width:36px;height:36px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--glass-border);
+  background:var(--glass-bg);
+  color:var(--navy-soft);
+}
+.social-icon svg{width:15px;height:15px;}
+.footer-col-title{font-size:13px; font-weight:700; color:var(--navy); margin-bottom:14px;}
+.footer-col a{
+  display:block;
+  font-size:13.5px; color:var(--muted); font-weight:500;
+  padding:6px 0;
+}
+.footer-col a:hover{color:var(--blue);}
+.footer-connect-text{font-size:13px; color:var(--muted); line-height:1.6; margin-bottom:14px;}
+.footer-bottom{
+  display:flex; flex-direction:column; gap:10px;
+  align-items:center; text-align:center;
+  padding-top:22px;
+  font-size:12.5px; color:var(--muted);
+}
+@media(min-width:640px){
+  .footer-bottom{flex-direction:row; justify-content:space-between; text-align:left;}
+}
+.footer-legal{display:flex; gap:18px;}
+
+.back-to-top{
+  position:fixed;
+  bottom:24px; right:20px;
+  width:46px;height:46px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--grad);
+  color:#fff;
+  box-shadow:0 10px 26px rgba(79,107,255,0.35);
+  z-index:400;
+  opacity:0; pointer-events:none;
+  transform:translateY(10px);
+  transition:opacity .3s var(--ease), transform .3s var(--ease);
+}
+.back-to-top.visible{opacity:1; pointer-events:auto; transform:translateY(0);}
+.back-to-top svg{width:18px;height:18px;}
+
+/* ============================================================
+   PROJECT DETAIL PAGE
+   ============================================================ */
+:root{
+  --detail-bg:transparent;
+  --detail-dot:rgba(16,26,51,0.08);
+  --detail-text:var(--navy);
+  --detail-muted:var(--muted);
+  --detail-border:rgba(16,26,51,0.12);
+}
+html.dark{
+  --detail-bg:transparent;
+  --detail-dot:rgba(255,255,255,0.06);
+  --detail-text:var(--navy);
+  --detail-muted:var(--muted);
+  --detail-border:rgba(255,255,255,0.12);
+}
+
+.detail-page{
+  display:none;
+  background:transparent;
+  color:var(--detail-text);
+  min-height:100vh;
+  position:relative;
+  overflow:hidden;
+}
+.detail-page.active{display:block;}
+body.detail-mode{background:var(--bg); color:var(--detail-text);}
+body.detail-mode .bg-atmos{opacity:1;}
+
+.detail-fade{
+  opacity:0; transform:translateY(14px);
+  animation:detail-in .5s var(--ease) forwards;
+}
+@keyframes detail-in{to{opacity:1; transform:translateY(0);}}
+
+.detail-deco{
+  position:absolute;
+  pointer-events:none;
+  z-index:0;
+  animation:float-y 7s ease-in-out infinite;
+}
+@media(prefers-reduced-motion:reduce){.detail-deco{animation:none;}}
+.deco-circle-pink{
+  width:64px;height:64px;border-radius:50%;
+  background:#ffb3d1;
+  top:90px; right:6%;
+}
+.deco-diamond-yellow{
+  width:56px;height:56px;
+  background:#ffcf4d;
+  border-radius:16px;
+  transform:rotate(45deg);
+  bottom:60px; left:3%;
+  animation-delay:1.2s;
+}
+@media(max-width:640px){
+  .deco-circle-pink{width:40px;height:40px; top:70px; right:4%;}
+  .deco-diamond-yellow{width:36px;height:36px; bottom:40px; left:2%;}
+}
+
+.detail-header-inner{
+  max-width:var(--container);
+  margin:0 auto;
+  padding:18px 20px;
+  display:flex; align-items:center; justify-content:flex-start;
+  gap:12px;
+  position:relative; z-index:2;
+  border-bottom:none;
+}
+@media(min-width:640px){.detail-header-inner{padding:20px 32px;}}
+.detail-nav-links{display:none; align-items:center; gap:4px;}
+@media(min-width:900px){.detail-nav-links{display:flex;}}
+.detail-nav-links a{
+  padding:9px 14px; border-radius:999px;
+  font-size:14.5px; font-weight:600; color:var(--detail-muted);
+}
+.detail-nav-links a:hover{color:var(--detail-text); background:rgba(120,90,255,0.08);}
+.back-pill{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:10px 18px;
+  border-radius:999px;
+  font-size:13.5px; font-weight:700;
+  border:1px solid var(--detail-border);
+  background:var(--detail-bg);
+  color:var(--detail-text);
+  flex-shrink:0;
+}
+.back-pill svg{width:14px;height:14px;}
+.back-pill .back-text{display:none;}
+@media(min-width:520px){.back-pill .back-text{display:inline;}}
+.detail-hamburger{
+  width:40px;height:40px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--detail-border);
+  background:var(--detail-bg);
+  cursor:pointer;
+  flex-shrink:0;
+}
+.detail-hamburger svg{width:18px;height:18px;color:var(--detail-text);}
+@media(min-width:900px){.detail-hamburger{display:none;}}
+
+.detail-main{
+  max-width:var(--container);
+  margin:0 auto;
+  padding:26px 20px 60px;
+  position:relative; z-index:1;
+}
+@media(min-width:640px){.detail-main{padding:34px 32px 80px;}}
+
+.breadcrumb{
+  font-size:13px; font-weight:600; color:var(--detail-muted); margin-bottom:18px;
+}
+.breadcrumb a{color:var(--detail-muted);}
+.breadcrumb a:hover{color:var(--detail-text);}
+.breadcrumb .sep{margin:0 6px; opacity:.5;}
+.breadcrumb .current{color:var(--detail-text); font-weight:700;}
+
+.category-badge{
+  display:inline-flex; align-items:center; gap:7px;
+  padding:8px 16px;
+  border-radius:999px;
+  font-size:11.5px; font-weight:800; letter-spacing:.05em; text-transform:uppercase;
+  background:var(--grad);
+  color:#fff;
+  margin-bottom:20px;
+}
+.category-badge svg{width:13px;height:13px;}
+
+.detail-hero-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:34px;
+}
+@media(min-width:960px){
+  .detail-hero-grid{grid-template-columns:0.92fr 1.08fr; gap:40px; align-items:start;}
+}
+
+.detail-title{
+  font-size:clamp(2rem, 5.6vw, 3rem);
+  font-weight:800;
+  letter-spacing:-.02em;
+  margin-bottom:16px;
+  color:var(--detail-text);
+}
+.detail-desc{
+  font-size:15px; line-height:1.7; color:var(--detail-muted);
+  margin-bottom:28px;
+  max-width:520px;
+}
+.detail-subhead{
+  font-size:15px; font-weight:800; color:var(--detail-text);
+  margin-bottom:12px;
+}
+.detail-block{margin-bottom:28px;}
+.detail-tech-pills{display:flex; flex-wrap:wrap; gap:9px;}
+.detail-tech-pill{
+  padding:8px 15px;
+  border-radius:999px;
+  font-size:12.5px; font-weight:700;
+  border:1px solid var(--detail-border);
+  color:var(--detail-text);
+  background:rgba(255,255,255,0.5);
+}
+html.dark .detail-tech-pill{background:rgba(255,255,255,0.04);}
+
+.feature-list{display:flex; flex-direction:column; gap:11px;}
+.feature-item{
+  display:flex; align-items:center; gap:10px;
+  font-size:14px; font-weight:600; color:var(--detail-text);
+}
+.feature-check{
+  width:19px;height:19px;border-radius:50%;
+  background:#22c55e;
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0;
+}
+.feature-check svg{width:11px;height:11px; stroke:#fff; stroke-width:3;}
+
+.detail-actions{display:flex; flex-wrap:wrap; gap:12px; margin-bottom:16px;}
+.demo-pw-pill{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:9px 16px;
+  border-radius:999px;
+  font-size:12.5px; font-weight:700;
+  border:1px solid var(--detail-border);
+  color:var(--detail-muted);
+  background:rgba(255,255,255,0.5);
+}
+html.dark .demo-pw-pill{background:rgba(255,255,255,0.04);}
+.demo-pw-pill b{color:var(--detail-text);}
+
+.more-projects-block{margin-top:40px;}
+.mp-head{
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:16px;
+}
+.mp-head h3{font-size:16px; font-weight:800; color:var(--detail-text);}
+.mp-head a{font-size:12.5px; font-weight:700; color:var(--detail-muted);}
+.mp-head a:hover{color:var(--detail-text);}
+
+.related-card{
+  border-radius:18px;
+  overflow:hidden;
+  background:var(--detail-bg);
+  border:2px solid var(--card-accent, #4f6bff);
+  margin-bottom:16px;
+  cursor:pointer;
+  transition:transform .3s var(--ease), box-shadow .3s var(--ease);
+}
+@media(hover:hover){.related-card:hover{transform:translateY(-4px); box-shadow:0 14px 30px rgba(23,19,8,0.12);}}
+.related-thumb{
+  aspect-ratio:16/9.5;
+  position:relative;
+  overflow:hidden;
+}
+.related-thumb img, .related-thumb svg{width:100%; height:100%; object-fit:cover;}
+.related-thumb-badge{
+  position:absolute; top:9px; right:9px;
+  width:26px; height:26px; border-radius:50%;
+  background:rgba(255,255,255,0.9);
+  display:flex; align-items:center; justify-content:center;
+}
+.related-thumb-badge svg{width:11px;height:11px;}
+.related-body{padding:14px 16px 16px;}
+.related-top-row{
+  display:flex; align-items:flex-start; justify-content:space-between; gap:8px;
+  margin-bottom:2px;
+}
+.related-title{font-size:15px; font-weight:800; color:var(--detail-text);}
+.related-tech-tag{
+  font-size:10px; font-weight:700; padding:4px 9px; border-radius:999px;
+  border:1px solid var(--detail-border);
+  color:var(--detail-muted);
+  white-space:nowrap; flex-shrink:0;
+}
+.related-cat{font-size:12px; color:var(--detail-muted); font-weight:600; margin-bottom:12px;}
+.related-btn-row{
+  display:flex; align-items:center; justify-content:space-between; gap:8px;
+}
+.related-view-btn{
+  display:inline-flex; align-items:center; gap:6px;
+  padding:8px 14px;
+  border-radius:999px;
+  font-size:12px; font-weight:700;
+  background:var(--grad);
+  color:#fff;
+}
+.related-view-btn svg{width:11px;height:11px;}
+.related-code-btn{
+  display:inline-flex; align-items:center; gap:5px;
+  padding:8px 12px;
+  border-radius:999px;
+  font-size:11.5px; font-weight:700;
+  border:1px solid var(--detail-border);
+  color:var(--detail-text);
+}
+.related-code-btn svg{width:11px;height:11px;}
+.related-pw{font-size:10.5px; color:var(--detail-muted); font-weight:700;}
+
+/* Preview panel */
+.preview-panel{position:relative;}
+.preview-toggle-row{
+  display:flex; justify-content:flex-end;
+  gap:8px;
+  margin-bottom:16px;
+}
+@media(max-width:959px){.preview-toggle-row{justify-content:center;}}
+.preview-toggle-btn{
+  display:inline-flex; align-items:center; gap:7px;
+  padding:9px 16px;
+  border-radius:999px;
+  font-size:12.5px; font-weight:700;
+  border:1px solid var(--detail-border);
+  background:var(--detail-bg);
+  color:var(--detail-muted);
+  cursor:pointer;
+  transition:all .25s var(--ease);
+}
+.preview-toggle-btn svg{width:14px;height:14px;}
+.preview-toggle-btn.active{
+  background:var(--grad);
+  color:#fff;
+  border-color:transparent;
+}
+
+.device-frame-wrap{
+  display:flex; justify-content:center;
+}
+.device-frame{
+  position:relative;
+  border-radius:20px;
+  background:#111;
+  padding:14px;
+  box-shadow:0 24px 60px rgba(23,19,8,0.20);
+  width:100%;
+  max-width:720px;
+  transition:max-width .4s var(--ease);
+}
+.device-frame.mode-mobile{
+  max-width:300px;
+  border-radius:34px;
+  padding:14px 10px;
+}
+.device-frame-bar{
+  display:flex; align-items:center; gap:6px;
+  padding-bottom:10px;
+}
+.device-frame.mode-mobile .device-frame-bar{
+  justify-content:center;
+  padding-bottom:8px;
+}
+.device-dot{width:8px;height:8px;border-radius:50%; background:#444;}
+.device-notch{
+  display:none;
+}
+.device-frame.mode-mobile .device-notch{
+  display:block;
+  width:60px; height:16px;
+  background:#000;
+  border-radius:0 0 12px 12px;
+  position:absolute; top:0; left:50%; transform:translateX(-50%);
+  z-index:2;
+}
+.device-screen{
+  border-radius:10px;
+  overflow:hidden;
+  background:#0a0a0a;
+  max-height:600px;
+  overflow-y:auto;
+  scrollbar-width:thin;
+}
+.device-frame.mode-mobile .device-screen{
+  border-radius:22px;
+  aspect-ratio:9/19.5;
+  max-height:640px;
+}
+.device-screen img{width:100%; display:block;}
+.device-frame-home{
+  display:none;
+  justify-content:center;
+  padding-top:8px;
+}
+.device-frame.mode-mobile .device-frame-home{display:flex;}
+.device-frame-home span{
+  width:100px; height:4px; border-radius:4px; background:#444;
+}
+
+/* CTA (detail page) */
+.detail-cta{
+  margin-top:60px;
+  border-radius:var(--radius-lg);
+  padding:40px 26px;
+  background:linear-gradient(135deg, var(--blue), var(--purple));
+  position:relative;
+  overflow:hidden;
+  text-align:center;
+}
+@media(min-width:640px){.detail-cta{padding:52px 40px;}}
+.detail-cta-deco{
+  position:absolute; border-radius:50%; pointer-events:none;
+  animation:float-y 8s ease-in-out infinite;
+}
+.dcd-yellow{width:110px; height:110px; background:#ffcf4d; top:-30px; right:-20px;}
+.dcd-green{
+  width:90px; height:90px; background:#34d399;
+  bottom:-30px; left:-10px;
+  border-radius:40% 60% 60% 40%/50% 40% 60% 50%;
+  animation-delay:1s;
+}
+@media(max-width:640px){.dcd-yellow{width:64px;height:64px;} .dcd-green{width:56px;height:56px;}}
+.detail-cta-inner{position:relative; z-index:1; max-width:520px; margin:0 auto;}
+.detail-cta h2{
+  font-size:clamp(1.6rem,4vw,2.2rem);
+  font-weight:800; color:#fff; margin-bottom:12px; letter-spacing:-.015em;
+}
+.detail-cta p{font-size:14.5px; color:rgba(255,255,255,0.88); line-height:1.6; margin-bottom:26px;}
+.detail-cta-btns{display:flex; flex-wrap:wrap; gap:12px; justify-content:center;}
+.dcta-btn-primary{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:13px 24px; border-radius:999px;
+  font-size:14px; font-weight:700;
+  background:#fff; color:var(--purple);
+}
+.dcta-btn-ghost{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:13px 24px; border-radius:999px;
+  font-size:14px; font-weight:700;
+  background:rgba(255,255,255,0.14);
+  border:1px solid rgba(255,255,255,0.35);
+  color:#fff;
+}
+.dcta-btn-primary svg, .dcta-btn-ghost svg{width:14px;height:14px;}
+
+.detail-footer-wrap{margin-top:0;}
+</style>
+</head>
+<body>
+
+<div class="bg-atmos" aria-hidden="true">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <div class="blob blob-4"></div>
+</div>
+
+<div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+<a href="#main" class="skip-link" style="position:absolute;left:-999px;top:0;background:#fff;color:#000;padding:10px 16px;border-radius:8px;z-index:9999;">Skip to content</a>
+
+<!-- ===== HEADER ===== -->
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <nav class="nav-bar" aria-label="Primary">
+      <a href="#home" class="brand" data-nav-home>
+        <span class="brand-mark">A</span>
+        <span>Arafat.code</span>
+      </a>
+      <div class="nav-links">
+        <a href="#home" data-nav-home>Home</a>
+        <a href="#projects" data-nav-home>Projects</a>
+        <a href="#skills" data-nav-home>Skills</a>
+        <a href="#about" data-nav-home>About</a>
+        <a href="#blog" data-nav-home>Blog</a>
+        <a href="#contact" data-nav-home>Contact</a>
+      </div>
+      <div class="nav-right">
+        <a href="#contact" class="btn btn-primary nav-cta" data-nav-home>Let's work together
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        </button>
+        <button class="hamburger" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- Mobile nav -->
+<div class="mobile-nav" id="mobileNav">
+  <div class="mobile-nav-backdrop" id="mobileNavBackdrop"></div>
+  <div class="mobile-nav-panel glass-strong">
+    <div class="mobile-nav-top">
+      <span class="brand"><span class="brand-mark">A</span> Arafat.code</span>
+      <button class="mobile-nav-close" id="mobileNavClose" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <a href="#home" class="mnav-link" data-nav-home>Home</a>
+    <a href="#projects" class="mnav-link" data-nav-home>Projects</a>
+    <a href="#skills" class="mnav-link" data-nav-home>Skills</a>
+    <a href="#about" class="mnav-link" data-nav-home>About</a>
+    <a href="#blog" class="mnav-link" data-nav-home>Blog</a>
+    <a href="#contact" class="mnav-link" data-nav-home>Contact</a>
+    <a href="#contact" class="btn btn-primary" data-nav-home>Let's work together
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </div>
+</div>
+
+<main id="main">
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-left">
+          <span class="badge glass-strong reveal"><span class="badge-dot"></span> Available for freelance</span>
+          <h1 class="hero-title reveal">I build Front-end &amp;<br>
+            <span class="grad-text">Shopify stores</span><br>
+            <span class="soft">that convert.</span>
+          </h1>
+          <p class="hero-desc reveal">Hi, I'm Arafat Hasan, a developer in Dhaka building fast, modern, and high-converting web experiences with the MERN stack &amp; Shopify 2.0.</p>
+          <div class="hero-cta-row reveal">
+            <a href="#projects" class="btn btn-primary">See my work
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a href="#" class="btn btn-ghost" id="downloadCvBtn">Download CV
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
+            </a>
+          </div>
+          <div class="stats-row reveal">
+            <div class="stat-card glass">
+              <div class="stat-num">60+</div>
+              <div class="stat-label">Projects Completed</div>
+            </div>
+            <div class="stat-card glass">
+              <div class="stat-num">5+</div>
+              <div class="stat-label">Years Experience</div>
+            </div>
+            <div class="stat-card glass">
+              <div class="stat-num">100%</div>
+              <div class="stat-label">Client Satisfaction</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal">
+          <div class="hero-orbit-wrap">
+            <div class="orbit-ring" aria-hidden="true"></div>
+            <div class="orbit-ring ring-2" aria-hidden="true"></div>
+            <div class="hero-photo-frame">
+              <img src="assets/Arafat pic.jpeg" alt="Illustrated portrait of Asif, a full-stack developer" loading="eager">
+            </div>
+
+            <div class="float-bubble glass-strong bubble-1" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#4f6bff" stroke-width="2"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg>
+            </div>
+            <div class="float-bubble glass-strong bubble-2" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#61dafb" stroke-width="1.6"><circle cx="12" cy="12" r="2.2" fill="#61dafb" stroke="none"/><ellipse cx="12" cy="12" rx="10" ry="4.2"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)"/></svg>
+            </div>
+            <div class="float-bubble glass-strong bubble-3" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="#47a248"><path d="M12 2C9 6 7 10 7 14a5 5 0 0010 0c0-4-2-8-5-12z"/></svg>
+            </div>
+
+            <div class="hero-chip glass-strong">
+              <div class="hero-chip-label">Front-end & Shopify Developer</div>
+              <div class="hero-chip-icons">
+                <span><svg viewBox="0 0 24 24" fill="#47a248"><path d="M12 2C9 6 7 10 7 14a5 5 0 0010 0c0-4-2-8-5-12z"/></svg></span>
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"><path d="M4 17l6-10 6 10M14 17l6-10"/></svg></span>
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="#61dafb" stroke-width="1.6"><circle cx="12" cy="12" r="2.2" fill="#61dafb" stroke="none"/><ellipse cx="12" cy="12" rx="10" ry="4.2"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)"/></svg></span>
+                <span><svg viewBox="0 0 24 24" fill="#68a063"><path d="M12 2l9 5v10l-9 5-9-5V7z"/></svg></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tech-bar-wrap reveal">
+        <div class="tech-bar glass-strong">
+          <span class="tech-bar-label">Technologies I work with</span>
+          <span class="tech-item"><svg viewBox="0 0 24 24" fill="none" stroke="#61dafb" stroke-width="1.6"><circle cx="12" cy="12" r="2.2" fill="#61dafb" stroke="none"/><ellipse cx="12" cy="12" rx="10" ry="4.2"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)"/></svg> React</span>
+          <span class="tech-item"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 2h6l10 15V2h0v20h-6L4 7v15H4z"/></svg> Next.js</span>
+          <span class="tech-item"><svg viewBox="0 0 24 24" fill="#47a248"><path d="M12 2C9 6 7 10 7 14a5 5 0 0010 0c0-4-2-8-5-12z"/></svg> MongoDB</span>
+          <span class="tech-item"><svg viewBox="0 0 24 24" fill="#68a063"><path d="M12 2l9 5v10l-9 5-9-5V7z"/></svg> Node.js</span>
+          <span class="tech-item"><svg viewBox="0 0 24 24" fill="#95bf47"><rect x="3" y="3" width="18" height="18" rx="4"/></svg> Shopify 2.0</span>
+          <span class="tech-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 17l6-10 6 10M14 17l6-10"/></svg> Express.js</span>
+          <span class="tech-item"><svg viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><path d="M3 12c1.5-4 4-6 8-6s6.5 2 8 6c-1.5 4-4 6-8 6s-6.5-2-8-6z"/></svg> Tailwind CSS</span>
+          <span class="tech-item"><svg viewBox="0 0 24 24" fill="#3178c6"><rect x="2" y="2" width="20" height="20" rx="3"/></svg> TypeScript</span>
+          <span class="tech-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section class="about-section" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="reveal">
+          <span class="eyebrow">About Me</span>
+          <h2 class="about-heading" style="margin-top:12px;">A developer who treats every website like a <span class="grad-text">product launch</span>.</h2>
+        </div>
+        <div class="reveal">
+          <p class="about-desc">I'm a full-stack developer with hands-on experience across the MERN stack and Shopify 2.0. From building React web apps to crafting conversion-focused Shopify stores, I love turning ideas into fast, beautiful, and scalable products.</p>
+          <div class="chip-row">
+            <span class="chip glass">Problem solving</span>
+            <span class="chip glass">Communication</span>
+            <span class="chip glass">Teamwork</span>
+            <span class="chip glass">Time management</span>
+            <span class="chip glass">Attention to detail</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PROJECTS ===== -->
+  <section class="projects-section" id="projects">
+    <div class="container">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">Featured Works</span>
+          <h2 class="section-heading">Websites I've built.</h2>
+        </div>
+        <div class="filter-row" id="filterRow" role="tablist" aria-label="Project category filter">
+          <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">All</button>
+          <button class="filter-btn" data-filter="websites" role="tab" aria-selected="false">Websites</button>
+          <button class="filter-btn" data-filter="ecommerce" role="tab" aria-selected="false">eCommerce</button>
+          <button class="filter-btn" data-filter="webapps" role="tab" aria-selected="false">Web Apps</button>
+        </div>
+      </div>
+
+      <div class="projects-grid" id="projectsGrid"></div>
+
+      <div class="view-more-wrap" id="viewMoreWrap">
+        <button class="btn btn-ghost view-more-btn" id="viewMoreBtn">
+          View More Projects
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+        </button>
+      </div>
+      <div class="coming-soon glass" id="comingSoon" style="display:none;">
+        <span>✦</span>
+        More projects are coming soon!
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== IMPACT + TESTIMONIALS ===== -->
+  <section class="impact-testimonial-section" id="skills">
+    <div class="container">
+      <div class="it-grid">
+        <div class="impact-card glass reveal">
+          <span class="eyebrow">Impact in numbers</span>
+          <div class="impact-numbers">
+            <div><div class="impact-num">60+</div><div class="impact-label">Projects Completed</div></div>
+            <div><div class="impact-num">5+</div><div class="impact-label">Years Experience</div></div>
+            <div><div class="impact-num">45+</div><div class="impact-label">Happy Clients</div></div>
+            <div><div class="impact-num">10K+</div><div class="impact-label">Lines of Code</div></div>
+          </div>
+        </div>
+
+        <div class="testimonial-card glass reveal">
+          <span class="eyebrow">What clients say</span>
+          <p class="testimonial-quote" id="testimonialQuote">"Asif delivered a stunning Shopify store that exceeded my expectations. Super fast, responsive, and highly professional!"</p>
+          <div class="testimonial-footer">
+            <div class="testimonial-person">
+              <div class="testimonial-avatar" id="testimonialAvatar">JC</div>
+              <div>
+                <div class="testimonial-name" id="testimonialName">James Carter</div>
+                <div class="testimonial-role" id="testimonialRole">Founder, Heyye Supplements</div>
+              </div>
+            </div>
+            <div class="rating-block">
+              <div class="rating-num">5.0</div>
+              <div class="stars">★★★★★</div>
+            </div>
+          </div>
+          <div class="testimonial-controls">
+            <button class="t-ctrl" id="tPrev" aria-label="Previous testimonial">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg>
+            </button>
+            <button class="t-ctrl" id="tNext" aria-label="Next testimonial">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== BLOG ===== -->
+  <section class="blog-section" id="blog">
+    <div class="container">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">From the Blog</span>
+          <h2 class="section-heading">Sharing what I learn.</h2>
+        </div>
+        <a href="#" class="btn btn-ghost">View all articles</a>
+      </div>
+      <div class="blog-grid" id="blogGrid"></div>
+    </div>
+  </section>
+
+  <!-- ===== CTA / CONTACT ===== -->
+  <section class="cta-section" id="contact">
+    <div class="container">
+      <div class="cta-card glass-strong reveal">
+        <div class="cta-blob-deco" aria-hidden="true"></div>
+        <div class="cta-grid">
+          <div>
+            <span class="eyebrow">Let's work together</span>
+            <h2 class="cta-heading">Got a project in mind?</h2>
+            <p class="cta-desc">I'm always open to discussing new projects, creative ideas or opportunities to be part of your vision.</p>
+            <div class="cta-btn-row">
+              <a href="mailto:asif.dev@gmail.com" class="btn btn-primary">Start a project
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+              <a href="#" class="btn btn-ghost" id="downloadCvBtn2">Download CV
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
+              </a>
+            </div>
+          </div>
+          <div class="contact-info-grid">
+            <div class="contact-info-card glass">
+              <div class="contact-info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z" opacity="0"/><path d="M3 6l9 6 9-6M4 6h16v12H4z"/></svg></div>
+              <div><div class="contact-info-label">Email</div><div class="contact-info-value">asif.dev@gmail.com</div></div>
+            </div>
+            <div class="contact-info-card glass">
+              <div class="contact-info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.5 7-11.5A7 7 0 105 9.5C5 14.5 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.4"/></svg></div>
+              <div><div class="contact-info-label">Location</div><div class="contact-info-value">Dhaka, Bangladesh</div></div>
+            </div>
+            <div class="contact-info-card glass">
+              <div class="contact-info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3-8.7A2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.3 1.8.6 2.7a2 2 0 01-.5 2.1L8 9.7a16 16 0 006 6l1.2-1.2a2 2 0 012.1-.5c.9.3 1.8.5 2.7.6a2 2 0 011.7 2.1z"/></svg></div>
+              <div><div class="contact-info-label">Phone</div><div class="contact-info-value">+880 1676-001234</div></div>
+            </div>
+            <div class="contact-info-card glass">
+              <div class="contact-info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+              <div><div class="contact-info-label">Response time</div><div class="contact-info-value">Within 12 hours</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===== PROJECT DETAIL PAGE (client-side routed) ===== -->
+<div class="detail-page" id="detailPage">
+  <div class="detail-deco deco-circle-pink" aria-hidden="true"></div>
+  <div class="detail-deco deco-diamond-yellow" aria-hidden="true"></div>
+
+  <header>
+    <div class="detail-header-inner">
+      <a href="#home" class="back-pill" data-nav-home>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <span class="back-text">Back to portfolio</span>
+      </a>
+    </div>
+  </header>
+
+  <div class="detail-main">
+    <nav class="breadcrumb detail-fade" aria-label="Breadcrumb">
+      <a href="#home" data-nav-home>Portfolio</a>
+      <span class="sep">/</span>
+      <span class="current" id="dCrumbTitle">Project</span>
+    </nav>
+
+    <span class="category-badge detail-fade" id="dCategoryBadge">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.6 6.8L22 10l-5.5 4.6L18 22l-6-3.6L6 22l1.5-7.4L2 10l7.4-1.2z"/></svg>
+      <span id="dCategoryText">Category</span>
+    </span>
+
+    <div class="detail-hero-grid">
+      <div class="detail-fade">
+        <h1 class="detail-title" id="dTitle">Project</h1>
+        <p class="detail-desc" id="dDescription">Description</p>
+
+        <div class="detail-block">
+          <div class="detail-subhead">Tech Stack</div>
+          <div class="detail-tech-pills" id="dTechStack"></div>
+        </div>
+
+        <div class="detail-block">
+          <div class="detail-subhead">Key Features</div>
+          <div class="feature-list" id="dFeatures"></div>
+        </div>
+
+        <div class="detail-actions">
+          <a href="#" id="dLiveBtn" class="btn btn-primary" target="_blank" rel="noopener">Visit live store
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h7v7M21 3l-9 9M5 5h5M5 5v14h14v-5"/></svg>
+          </a>
+          <a href="#" id="dSourceBtn" class="btn btn-ghost" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" style="width:15px;height:15px;"><path d="M12 .5C5.7.5.8 5.4.8 11.7c0 5 3.2 9.2 7.7 10.7.6.1.8-.3.8-.6v-2.2c-3.1.7-3.8-1.3-3.8-1.3-.5-1.3-1.2-1.6-1.2-1.6-1-.7.1-.7.1-.7 1.1.1 1.6 1.1 1.6 1.1 1 1.6 2.5 1.2 3.1.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.2-5.1-5.5 0-1.2.4-2.2 1.1-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 1.1a10.4 10.4 0 015.5 0c2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.6.1 2.9.7.8 1.1 1.8 1.1 3 0 4.3-2.6 5.2-5.1 5.5.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.5-1.5 7.7-5.7 7.7-10.7C23.2 5.4 18.3.5 12 .5z"/></svg>
+            View source
+          </a>
+        </div>
+        <div id="dDemoPwWrap"></div>
+
+        <div class="more-projects-block">
+          <div class="mp-head">
+            <h3>More Projects</h3>
+            <a href="#projects" data-nav-home>View all</a>
+          </div>
+          <div id="dRelatedProjects"></div>
+        </div>
+      </div>
+
+      <div class="preview-panel detail-fade">
+        <div class="preview-toggle-row">
+          <button class="preview-toggle-btn active" id="dToggleDesktop">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>
+            Desktop
+          </button>
+          <button class="preview-toggle-btn" id="dToggleMobile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M11 18h2"/></svg>
+            Mobile
+          </button>
+        </div>
+        <div class="device-frame-wrap">
+          <div class="device-frame" id="dDeviceFrame">
+            <div class="device-notch" aria-hidden="true"></div>
+            <div class="device-frame-bar" aria-hidden="true">
+              <span class="device-dot"></span><span class="device-dot"></span><span class="device-dot"></span>
+            </div>
+            <div class="device-screen" id="dDeviceScreen"></div>
+            <div class="device-frame-home" aria-hidden="true"><span></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-cta detail-fade">
+      <div class="detail-cta-deco dcd-yellow" aria-hidden="true"></div>
+      <div class="detail-cta-deco dcd-green" aria-hidden="true"></div>
+      <div class="detail-cta-inner">
+        <h2>Want a store like this?</h2>
+        <p>I can build a custom Shopify store tailored to your brand. Let's talk about your project.</p>
+        <div class="detail-cta-btns">
+          <a href="mailto:asif.dev@gmail.com" class="dcta-btn-primary">Start a conversation
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h7v7M21 3l-9 9M5 5h5M5 5v14h14v-5"/></svg>
+          </a>
+          <a href="#projects" class="dcta-btn-ghost" data-nav-home>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            View all projects
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+
+      <div>
+        <a href="#home" class="brand" data-nav-home><span class="brand-mark">A</span> Asif.dev</a>
+        <p class="footer-brand-desc">Building fast, scalable, and high-converting web experiences.</p>
+        <div class="footer-social">
+          <a href="#" class="social-icon" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.8 5.4.8 11.7c0 5 3.2 9.2 7.7 10.7.6.1.8-.3.8-.6v-2.2c-3.1.7-3.8-1.3-3.8-1.3-.5-1.3-1.2-1.6-1.2-1.6-1-.7.1-.7.1-.7 1.1.1 1.6 1.1 1.6 1.1 1 1.6 2.5 1.2 3.1.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.2-5.1-5.5 0-1.2.4-2.2 1.1-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 1.1a10.4 10.4 0 015.5 0c2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.6.1 2.9.7.8 1.1 1.8 1.1 3 0 4.3-2.6 5.2-5.1 5.5.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.5-1.5 7.7-5.7 7.7-10.7C23.2 5.4 18.3.5 12 .5z"/></svg></a>
+          <a href="#" class="social-icon" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 11-.02 5 2.5 2.5 0 01.02-5zM.5 8.98h4v14.02h-4V8.98zM8.5 8.98h3.8v1.9h.05c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.78 2.65 4.78 6.1v8.08h-4v-7.16c0-1.71-.03-3.9-2.38-3.9-2.39 0-2.75 1.87-2.75 3.79v7.27h-4V8.98z"/></svg></a>
+          <a href="#" class="social-icon" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 4.9c-.8.4-1.7.6-2.6.8a4.6 4.6 0 002-2.5c-.9.5-1.8.9-2.9 1.1A4.5 4.5 0 0012.9 8.9c0 .4 0 .7.1 1a12.9 12.9 0 01-9.3-4.7 4.5 4.5 0 001.4 6 4.4 4.4 0 01-2-.6v.1c0 2.2 1.6 4 3.6 4.5-.4.1-.8.1-1.2.1-.3 0-.6 0-.8-.1a4.5 4.5 0 004.2 3.1A9 9 0 011 20.4a12.8 12.8 0 006.9 2c8.3 0 12.8-6.9 12.8-12.8v-.6c.9-.6 1.6-1.4 2.3-2.1z"/></svg></a>
+          <a href="#" class="social-icon" aria-label="Dribbble"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M7 3.3C9.5 6 11.5 9.5 12.7 15c1 4.2 1 5.7 1 5.7M2.2 13.3c3.3.3 8.5-.3 11.4-2 2.3-1.3 4.5-3.6 5.6-6.6M2.7 8.4c4.5 1.2 12 1 15.6-.3 1.5-.5 2.7-1.2 3-1.5"/></svg></a>
+          <a href="#" class="social-icon" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.6"/><circle cx="17.3" cy="6.7" r="1"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Quick Links</div>
+        <a href="#home" data-nav-home>Home</a>
+        <a href="#projects" data-nav-home>Projects</a>
+        <a href="#skills" data-nav-home>Skills</a>
+        <a href="#about" data-nav-home>About Me</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Services</div>
+        <a href="#">Web Development</a>
+        <a href="#">Shopify Development</a>
+        <a href="#">UI/UX Design</a>
+        <a href="#">Consulting</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Let's Connect</div>
+        <p class="footer-connect-text">Have a project in mind or want to say hello? Drop me a message!</p>
+        <a href="mailto:asif.dev@gmail.com" class="btn btn-ghost" style="padding:11px 18px; font-size:13.5px;">Say hello
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Asif Shah Diner. All rights reserved.</span>
+      <div class="footer-legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" id="backToTop" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ============ THEME TOGGLE ============ */
+  const root = document.documentElement;
+  const themeToggle = document.getElementById('themeToggle');
+  function applyTheme(t){
+    if(t === 'dark'){ root.classList.add('dark'); } else { root.classList.remove('dark'); }
+  }
+  const savedTheme = localStorage.getItem('asifdev-theme');
+  if(savedTheme){ applyTheme(savedTheme); }
+  else if(window.matchMedia('(prefers-color-scheme: dark)').matches){ applyTheme('dark'); }
+  themeToggle.addEventListener('click', function(){
+    const isDark = root.classList.contains('dark');
+    const next = isDark ? 'light' : 'dark';
+    applyTheme(next);
+    localStorage.setItem('asifdev-theme', next);
+  });
+
+  /* ============ HEADER SCROLL STATE ============ */
+  const header = document.getElementById('siteHeader');
+  function onScroll(){
+    if(window.scrollY > 12){ header.classList.add('scrolled'); }
+    else { header.classList.remove('scrolled'); }
+    const backBtn = document.getElementById('backToTop');
+    if(window.scrollY > 600){ backBtn.classList.add('visible'); } else { backBtn.classList.remove('visible'); }
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+  document.getElementById('backToTop').addEventListener('click', function(){
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+
+  /* ============ MOBILE NAV ============ */
+  const mobileNav = document.getElementById('mobileNav');
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const mobileNavClose = document.getElementById('mobileNavClose');
+  const mobileNavBackdrop = document.getElementById('mobileNavBackdrop');
+  function openMobileNav(){
+    mobileNav.classList.add('open');
+    hamburgerBtn.setAttribute('aria-expanded','true');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMobileNav(){
+    mobileNav.classList.remove('open');
+    hamburgerBtn.setAttribute('aria-expanded','false');
+    document.body.style.overflow = '';
+  }
+  hamburgerBtn.addEventListener('click', openMobileNav);
+  const detailHamburgerBtn = document.getElementById('detailHamburgerBtn');
+  if(detailHamburgerBtn){ detailHamburgerBtn.addEventListener('click', openMobileNav); }
+  mobileNavClose.addEventListener('click', closeMobileNav);
+  mobileNavBackdrop.addEventListener('click', closeMobileNav);
+  document.querySelectorAll('.mobile-nav a').forEach(a => a.addEventListener('click', closeMobileNav));
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') closeMobileNav();
+  });
+
+  /* ============ CUSTOM CURSOR (desktop only) ============ */
+  const supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const cursorDot = document.getElementById('cursorDot');
+  const cursorRing = document.getElementById('cursorRing');
+  if(!supportsHover){
+    document.body.classList.add('no-cursor');
+  } else {
+    let mouseX = window.innerWidth/2, mouseY = window.innerHeight/2;
+    let ringX = mouseX, ringY = mouseY;
+    document.addEventListener('mousemove', function(e){
+      mouseX = e.clientX; mouseY = e.clientY;
+      cursorDot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%,-50%)`;
+    });
+    function animateRing(){
+      ringX += (mouseX - ringX) * 0.18;
+      ringY += (mouseY - ringY) * 0.18;
+      cursorRing.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%,-50%)`;
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+
+    const hoverables = 'a, button, .filter-btn, .project-card, .chip, input, textarea';
+    document.addEventListener('mouseover', function(e){
+      if(e.target.closest(hoverables)){ cursorRing.classList.add('hovering'); }
+    });
+    document.addEventListener('mouseout', function(e){
+      if(e.target.closest(hoverables)){ cursorRing.classList.remove('hovering'); }
+    });
+    document.addEventListener('mouseleave', function(){ cursorDot.style.opacity='0'; cursorRing.style.opacity='0'; });
+    document.addEventListener('mouseenter', function(){ cursorDot.style.opacity='1'; cursorRing.style.opacity='1'; });
+  }
+
+  /* ============ WATER DROP CLICK SOUND (Web Audio API) ============ */
+  let audioCtx = null;
+  let lastSoundTime = 0;
+  function getAudioCtx(){
+    if(!audioCtx){
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if(AC) audioCtx = new AC();
+    }
+    return audioCtx;
+  }
+  function playWaterDrop(){
+    const now = performance.now();
+    if(now - lastSoundTime < 90) return; // throttle/debounce
+    lastSoundTime = now;
+    const ctx = getAudioCtx();
+    if(!ctx) return;
+    if(ctx.state === 'suspended') ctx.resume();
+
+    const t0 = ctx.currentTime;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    const filter = ctx.createBiquadFilter();
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(1200, t0);
+    osc.frequency.exponentialRampToValueAtTime(320, t0 + 0.11);
+
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(2500, t0);
+
+    gain.gain.setValueAtTime(0.0001, t0);
+    gain.gain.exponentialRampToValueAtTime(0.16, t0 + 0.008);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.16);
+
+    osc.connect(filter);
+    filter.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start(t0);
+    osc.stop(t0 + 0.18);
+  }
+  // Initialize audio context on first user interaction (autoplay policy)
+  function primeAudio(){
+    getAudioCtx();
+    document.removeEventListener('click', primeAudio);
+    document.removeEventListener('touchstart', primeAudio);
+  }
+  document.addEventListener('click', primeAudio, {once:true});
+  document.addEventListener('touchstart', primeAudio, {once:true});
+
+  document.addEventListener('click', function(e){
+    playWaterDrop();
+    // Cursor ripple (desktop only)
+    if(supportsHover){
+      const ripple = document.createElement('div');
+      ripple.className = 'ripple';
+      ripple.style.left = e.clientX + 'px';
+      ripple.style.top = e.clientY + 'px';
+      document.body.appendChild(ripple);
+      setTimeout(()=> ripple.remove(), 650);
+    }
+  }, {passive:true});
+
+  /* ============ SMOOTH SCROLL FOR ANCHORS ============ */
+  document.querySelectorAll('a[href^="#"]').forEach(function(link){
+    if(link.hasAttribute('data-nav-home')) return; // handled by router script (needs to unhide #main first)
+    link.addEventListener('click', function(e){
+      const id = link.getAttribute('href');
+      if(id.length > 1){
+        const target = document.querySelector(id);
+        if(target){
+          e.preventDefault();
+          const headerH = document.getElementById('siteHeader').offsetHeight;
+          const y = target.getBoundingClientRect().top + window.scrollY - headerH - 14;
+          window.scrollTo({top:y, behavior:'smooth'});
+        }
+      }
+    });
+  });
+
+  /* ============ DOWNLOAD CV (placeholder behavior) ============ */
+  [document.getElementById('downloadCvBtn'), document.getElementById('downloadCvBtn2')].forEach(function(btn){
+    if(!btn) return;
+    btn.addEventListener('click', function(e){
+      e.preventDefault();
+      alert('CV download coming soon! Please reach out via email in the meantime.');
+    });
+  });
+
+  /* ============ SCROLL REVEAL ============ */
+  const revealEls = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    const io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.12, rootMargin:'0px 0px -40px 0px'});
+    revealEls.forEach(el => io.observe(el));
+  } else {
+    revealEls.forEach(el => el.classList.add('in-view'));
+  }
+
+})();
+</script>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ============ PROJECT DATA ============ */
+  const accentPalette = ["#ff8fb3","#ff9d4d","#34d399","#8b5cf6","#4f6bff","#fbbf24","#f472b6","#38bdf8"];
+
+  const projects = [
+    {
+      slug:"otap", name:"OTAP", category:"ecommerce", tag:"eCommerce",
+      catLabel:"Anime Lifestyle & Collectibles Store",
+      desc:"Anime lifestyle & collectibles store",
+      longDesc:"Custom Shopify 2.0 theme for a cyberpunk anime lifestyle brand. Built for collectors of premium anime figures, cosplay apparel, and limited-edition art collectibles. Features 8 fully designed pages including a lore-driven Story page, Community hub, masonry Gallery, and an encrypted Contact terminal — all wrapped in a Neo-Tokyo cyberpunk aesthetic.",
+      tech:["Shopify 2.0","Liquid","CSS","JavaScript"],
+      features:["8 fully built pages","16-product catalog with filtering","Lore-driven story timeline","Limited edition drop countdown","Community & Discord hub","Masonry gallery grid","Encrypted contact terminal","Mobile-first responsive design","SEO optimized"],
+      grad:["#0f2027","#2c5364"], url:"#", sourceUrl:"#", demoPassword:"1", accentColor:"#ff8fb3"
+    },
+    {
+      slug:"voltix", name:"VOLTIX", category:"webapps", tag:"Automotive",
+      catLabel:"3D Interactive Car Showcase",
+      desc:"3D interactive car showcase",
+      longDesc:"An immersive 3D car configurator built with Three.js and GSAP. Users can rotate, customize paint finishes, and explore trim packages in real time, with cinematic camera transitions between vehicle angles.",
+      tech:["Three.js","GSAP","React","WebGL"],
+      features:["Real-time 3D car rotation","Live paint & trim customizer","Cinematic camera transitions","Performance spec comparison","Optimized WebGL asset loading","Mobile touch gesture support","Dealer locator integration","SEO optimized"],
+      grad:["#3a3a3a","#111"], url:"#", sourceUrl:"#", demoPassword:"1", accentColor:"#ff9d4d"
+    },
+    {
+      slug:"heyya", name:"Heyye", category:"ecommerce", tag:"Supplements",
+      catLabel:"Kid Supplements",
+      desc:"KOL supplements store",
+      longDesc:"A conversion-focused Shopify store for a children's calm & focus supplement brand, built around influencer-driven storytelling, subscription bundles, and a fast, trust-building checkout flow.",
+      tech:["Shopify 2.0","Liquid","CSS","JavaScript"],
+      features:["Subscribe & save bundles","Influencer story sections","Ingredient transparency panel","Reviews with photo uploads","Sticky add-to-cart on mobile","Upsell cart drawer","Fast, optimized checkout","SEO optimized"],
+      grad:["#f5567a","#f2a154"], url:"#", sourceUrl:"#", demoPassword:"1", accentColor:"#34d399"
+    },
+    {
+      slug:"bro-compagnie", name:"Bro & Compagnie", category:"websites", tag:"Automotive",
+      catLabel:"Pet Care Services",
+      desc:"Part car services",
+      longDesc:"A bilingual service-booking website for a pet care company, combining a warm, approachable design with a streamlined appointment request flow and service area lookup.",
+      tech:["Next.js","Tailwind CSS"],
+      features:["Bilingual (FR/EN) content system","Service area postcode lookup","Online appointment requests","Staff & service showcase","Client testimonial carousel","Mobile-first booking flow","SEO optimized"],
+      grad:["#2b3d2f","#1a241d"], url:"#", sourceUrl:"#", demoPassword:"", accentColor:"#8b5cf6"
+    },
+    {
+      slug:"sweetpaw", name:"SweetPaw", category:"ecommerce", tag:"Pets",
+      catLabel:"Natural Dog Chews Store",
+      desc:"Natural dog chews store",
+      longDesc:"A playful, trust-driven Shopify store for an all-natural dog chews brand, with ingredient sourcing stories, subscription options, and a size/breed recommendation quiz.",
+      tech:["Shopify 2.0","Liquid","CSS","JavaScript"],
+      features:["Breed-size recommendation quiz","Subscribe & save plans","Ingredient sourcing stories","Vet-approved trust badges","Photo review gallery","Bundle builder","SEO optimized"],
+      grad:["#0e5a6b","#123a4a"], url:"#", sourceUrl:"#", demoPassword:"1", accentColor:"#4f6bff"
+    },
+    {
+      slug:"manga-mint", name:"Manga Mint", category:"websites", tag:"Gaming",
+      catLabel:"Anime & Manga Store",
+      desc:"Anime & manga store",
+      longDesc:"A vibrant storefront concept for an anime & manga retailer, featuring genre-based discovery, a volume tracker for ongoing series, and pre-order drop timers.",
+      tech:["Next.js","Tailwind CSS"],
+      features:["Genre-based discovery grid","Series volume tracker","Pre-order drop countdowns","Wishlist & restock alerts","Masonry cover gallery","Mobile-first responsive design","SEO optimized"],
+      grad:["#8a3a1e","#d9622f"], url:"#", sourceUrl:"#", demoPassword:"", accentColor:"#fbbf24"
+    },
+    {
+      slug:"cybernexus", name:"CyberNexus", category:"webapps", tag:"AI",
+      catLabel:"Online AI Learning Platform",
+      desc:"Online AI learning platform",
+      longDesc:"A course platform for AI/ML learners with progress tracking, interactive coding sandboxes, and a cohort-based community layer for peer accountability.",
+      tech:["Next.js","Tailwind CSS","Node.js","MongoDB"],
+      features:["Interactive coding sandboxes","Progress & streak tracking","Cohort community threads","Certificate generation","Adaptive quiz engine","Dark-mode-first UI","SEO optimized"],
+      grad:["#3a0a0a","#0d0d0d"], url:"#", sourceUrl:"#", demoPassword:"", accentColor:"#f472b6"
+    },
+    {
+      slug:"vantique", name:"Vantique", category:"ecommerce", tag:"Fashion",
+      catLabel:"Luxury Streetwear Brand",
+      desc:"Luxury streetwear brand",
+      longDesc:"A moody, editorial Shopify build for a luxury streetwear label, with lookbook-driven storytelling, limited drop mechanics, and a members-only early-access tier.",
+      tech:["Shopify 2.0","Liquid","CSS","JavaScript"],
+      features:["Editorial lookbook layout","Limited drop countdown","Members-only early access","Size guide with fit notes","Instagram shoppable feed","Fast mobile checkout","SEO optimized"],
+      grad:["#111","#3a0d0d"], url:"#", sourceUrl:"#", demoPassword:"1", accentColor:"#38bdf8"
+    },
+    {
+      slug:"timeforge", name:"TIMEFORGE", category:"ecommerce", tag:"Watch",
+      catLabel:"Luxury Watch Collection",
+      desc:"Luxury watch collection",
+      longDesc:"A premium Shopify experience for a luxury watch collection, pairing macro product photography with detailed craftsmanship stories and a concierge-style enquiry flow.",
+      tech:["Shopify 2.0","Liquid","CSS","JavaScript"],
+      features:["Macro product photo viewer","Craftsmanship story sections","Concierge enquiry form","Warranty & authenticity panel","Currency-aware pricing","Wishlist with saved builds","SEO optimized"],
+      grad:["#1a1a1a","#000"], url:"#", sourceUrl:"#", demoPassword:"1", accentColor:"#ff8fb3"
+    },
+    {
+      slug:"northline-studio", name:"Northline Studio", category:"websites", tag:"Agency",
+      catLabel:"Creative Agency Portfolio",
+      desc:"Creative agency portfolio site",
+      longDesc:"A confident, motion-driven portfolio site for a creative agency, built to showcase case studies with scroll-triggered reveals and a fast, minimal case-study template.",
+      tech:["Next.js","Framer Motion"],
+      features:["Scroll-triggered case studies","Reusable case-study template","Client logo marquee","Team & culture page","Contact form with brief intake","SEO optimized"],
+      grad:["#1e2a4a","#3b4d8c"], url:"#", sourceUrl:"#", demoPassword:"", accentColor:"#ff9d4d"
+    },
+    {
+      slug:"brewcart", name:"BrewCart", category:"ecommerce", tag:"Food & Bev",
+      catLabel:"Specialty Coffee Subscription",
+      desc:"Specialty coffee subscription store",
+      longDesc:"A warm, tactile Shopify subscription store for a specialty coffee roaster, with a roast-profile quiz, flexible delivery cadence, and origin-story content for each bean.",
+      tech:["Shopify 2.0","Liquid","CSS","JavaScript"],
+      features:["Roast-profile matching quiz","Flexible subscription cadence","Bean origin story pages","Grind-size selector","Gift subscription flow","Loyalty points system","SEO optimized"],
+      grad:["#4a2c17","#7a4a26"], url:"#", sourceUrl:"#", demoPassword:"1", accentColor:"#34d399"
+    },
+    {
+      slug:"taskflow", name:"TaskFlow", category:"webapps", tag:"Productivity",
+      catLabel:"Team Task & Sprint Management",
+      desc:"Team task & sprint management app",
+      longDesc:"A full-stack MERN application for agile teams to plan sprints, track tasks on a Kanban board, and get real-time updates via WebSockets, with role-based permissions.",
+      tech:["MERN Stack","Socket.io","MongoDB","Express.js"],
+      features:["Real-time Kanban board","Sprint planning & velocity charts","Role-based permissions","Live activity via Socket.io","Task comments & mentions","REST API with JWT auth","Responsive dashboard UI"],
+      grad:["#122036","#2d4a7a"], url:"#", sourceUrl:"#", demoPassword:"", accentColor:"#8b5cf6"
+    }
+  ];
+
+
+  const blogPosts = [
+    { cat:"Shopify", tagGrad:["#0fb8a4","#0e6f8c"], title:"Shopify 2.0 Theme Development Best Practices", date:"May 10, 2025", read:"5 min read" },
+    { cat:"React", tagGrad:["#1a2340","#0b1120"], title:"State Management in Modern React Apps", date:"Apr 28, 2025", read:"7 min read" },
+    { cat:"MERN Stack", tagGrad:["#111","#000"], title:"Building Scalable MERN Apps in 2025", date:"Apr 15, 2025", read:"6 min read" },
+    { cat:"Performance", tagGrad:["#2a1a4a","#3b2570"], title:"Speed Optimization Tips for Web Developers", date:"Apr 05, 2025", read:"6 min read" }
+  ];
+
+  const testimonials = [
+    { quote:"Asif delivered a stunning Shopify store that exceeded my expectations. Super fast, responsive, and highly professional!", name:"James Carter", role:"Founder, Heyye Supplements", initials:"JC" },
+    { quote:"Working with Asif was seamless. He turned our messy requirements into a clean, high-converting MERN application ahead of schedule.", name:"Priya Nair", role:"Product Lead, TaskFlow", initials:"PN" },
+    { quote:"Our new site loads instantly and looks incredible on every device. Communication throughout the project was excellent.", name:"Daniel Cho", role:"CEO, Vantique", initials:"DC" }
+  ];
+
+  function projectThumbSvg(p){
+    return `<svg viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+      <defs><linearGradient id="g-${p.name.replace(/\s+/g,'')}" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="${p.grad[0]}"/><stop offset="100%" stop-color="${p.grad[1]}"/>
+      </linearGradient></defs>
+      <rect width="400" height="250" fill="url(#g-${p.name.replace(/\s+/g,'')})"/>
+      <text x="200" y="132" font-family="Plus Jakarta Sans, sans-serif" font-size="30" font-weight="800" fill="rgba(255,255,255,0.92)" text-anchor="middle" letter-spacing="2">${p.name.toUpperCase()}</text>
+    </svg>`;
+  }
+  function blogThumbSvg(post, idx){
+    return `<svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+      <defs><linearGradient id="bg-${idx}" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="${post.tagGrad[0]}"/><stop offset="100%" stop-color="${post.tagGrad[1]}"/>
+      </linearGradient></defs>
+      <rect width="400" height="250" fill="url(#bg-${idx})"/>
+      <text x="24" y="145" font-family="Plus Jakarta Sans, sans-serif" font-size="20" font-weight="700" fill="rgba(255,255,255,0.85)">${post.cat}</text>
+    </svg>`;
+  }
+
+  const catLabels = {ecommerce:"eCommerce", websites:"Websites", webapps:"Web Apps"};
+
+  /* ============ PROJECT RENDER / FILTER / VIEW MORE STATE ============ */
+  const grid = document.getElementById('projectsGrid');
+  const viewMoreWrap = document.getElementById('viewMoreWrap');
+  const viewMoreBtn = document.getElementById('viewMoreBtn');
+  const comingSoon = document.getElementById('comingSoon');
+  const filterButtons = document.querySelectorAll('.filter-btn');
+
+  let currentFilter = 'all';
+  let visibleCount = 9;
+
+  function getFiltered(){
+    if(currentFilter === 'all') return projects;
+    return projects.filter(p => p.category === currentFilter);
+  }
+
+  function cardHTML(p){
+    return `
+      <article class="project-card glass" data-slug="${p.slug}" tabindex="0" role="link" aria-label="View details for ${p.name}">
+        <div class="project-thumb" data-nav-project="${p.slug}">
+          ${projectThumbSvg(p)}
+          <span class="project-cat-tag">${p.tag}</span>
+          <a href="${p.url}" class="project-link-icon" aria-label="Open ${p.name} live site" onclick="event.stopPropagation()" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h7v7M21 3l-9 9M5 5h5M5 5v14h14v-5"/></svg>
+          </a>
+        </div>
+        <div class="project-body">
+          <h3 class="project-name" data-nav-project="${p.slug}">${p.name}</h3>
+          <p class="project-desc">${p.desc}</p>
+          <div class="project-footer">
+            <div class="tech-pills">
+              ${p.tech.slice(0,2).map(t => `<span class="tech-pill">${t}</span>`).join('')}
+            </div>
+            <span class="live-link" data-nav-project="${p.slug}">View details
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+          </div>
+        </div>
+      </article>`;
+  }
+
+  function renderProjects(){
+    const filtered = getFiltered();
+    const toShow = filtered.slice(0, visibleCount);
+    grid.innerHTML = toShow.map(cardHTML).join('');
+    // stagger card animation
+    Array.from(grid.children).forEach((el, i) => {
+      el.style.animationDelay = (i * 0.05) + 's';
+    });
+
+    const hasMore = filtered.length > visibleCount;
+    if(hasMore){
+      viewMoreWrap.style.display = 'flex';
+      comingSoon.style.display = 'none';
+    } else {
+      viewMoreWrap.style.display = 'none';
+      // Only show "coming soon" once user has seen the full set (i.e. all 12 exist and filter is all,
+      // or filtered category fully shown) - matches spec: after all visible & no more hidden.
+      comingSoon.style.display = 'block';
+    }
+
+    // Card click navigation (whole card is a link target; inner nav-project elements handled by delegation)
+    Array.from(grid.querySelectorAll('.project-card')).forEach(function(card){
+      card.addEventListener('click', function(e){
+        if(e.target.closest('.project-link-icon')) return;
+        window.location.hash = '#/projects/' + card.getAttribute('data-slug');
+      });
+      card.addEventListener('keydown', function(e){
+        if(e.key === 'Enter' || e.key === ' '){
+          e.preventDefault();
+          window.location.hash = '#/projects/' + card.getAttribute('data-slug');
+        }
+      });
+    });
+  }
+
+
+  filterButtons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      filterButtons.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected','true');
+      currentFilter = btn.getAttribute('data-filter');
+      visibleCount = 9;
+      renderProjects();
+    });
+  });
+
+  viewMoreBtn.addEventListener('click', function(){
+    visibleCount += 3;
+    renderProjects();
+  });
+
+  renderProjects();
+
+  /* ============ BLOG RENDER ============ */
+  const blogGrid = document.getElementById('blogGrid');
+  blogGrid.innerHTML = blogPosts.map(function(post, idx){
+    return `
+      <article class="blog-card glass">
+        <div class="blog-thumb">
+          ${blogThumbSvg(post, idx)}
+          <span class="blog-cat">${post.cat}</span>
+        </div>
+        <div class="blog-body">
+          <h3 class="blog-title">${post.title}</h3>
+          <div class="blog-meta"><span>${post.date}</span><span>${post.read}</span></div>
+        </div>
+      </article>`;
+  }).join('');
+
+  /* ============ TESTIMONIAL CAROUSEL ============ */
+  let tIndex = 0;
+  const tQuote = document.getElementById('testimonialQuote');
+  const tName = document.getElementById('testimonialName');
+  const tRole = document.getElementById('testimonialRole');
+  const tAvatar = document.getElementById('testimonialAvatar');
+  function renderTestimonial(){
+    const t = testimonials[tIndex];
+    tQuote.textContent = '"' + t.quote + '"';
+    tName.textContent = t.name;
+    tRole.textContent = t.role;
+    tAvatar.textContent = t.initials;
+  }
+  document.getElementById('tPrev').addEventListener('click', function(){
+    tIndex = (tIndex - 1 + testimonials.length) % testimonials.length;
+    renderTestimonial();
+  });
+  document.getElementById('tNext').addEventListener('click', function(){
+    tIndex = (tIndex + 1) % testimonials.length;
+    renderTestimonial();
+  });
+
+  // Expose data for the router/detail-page script
+  window.__portfolioData = { projects, catLabels, accentPalette, projectThumbSvg };
+
+})();
+</script>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ============================================================
+     CLIENT-SIDE ROUTER: hash-based, no reload, single-page app
+     Route pattern: #/projects/<slug>
+     Any other hash (or none) => home view
+     ============================================================ */
+
+  function getData(){ return window.__portfolioData || {}; }
+
+  const mainEl = document.getElementById('main');
+  const detailPage = document.getElementById('detailPage');
+  const siteHeader = document.getElementById('siteHeader');
+
+  function parseRoute(){
+    const hash = window.location.hash || '';
+    const m = hash.match(/^#\/projects\/([a-z0-9-]+)/i);
+    return m ? { name:'project', slug:m[1] } : { name:'home' };
+  }
+
+  function findProject(slug){
+    const { projects } = getData();
+    if(!projects) return null;
+    return projects.find(p => p.slug === slug) || null;
+  }
+
+  function pickRelated(current, count){
+    const { projects } = getData();
+    const rest = projects.filter(p => p.slug !== current.slug);
+    // Prefer same category first, then fill with others, preserving original order
+    const sameCat = rest.filter(p => p.category === current.category);
+    const others = rest.filter(p => p.category !== current.category);
+    return sameCat.concat(others).slice(0, count);
+  }
+
+  function relatedCardHTML(p){
+    const { projectThumbSvg } = getData();
+    return `
+      <div class="related-card detail-fade" style="--card-accent:${p.accentColor}; animation-delay:.05s;" data-nav-project="${p.slug}" tabindex="0" role="link" aria-label="View details for ${p.name}">
+        <div class="related-thumb">
+          ${projectThumbSvg(p)}
+          <span class="related-thumb-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#101a33" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h7v7M21 3l-9 9M5 5h5M5 5v14h14v-5"/></svg></span>
+        </div>
+        <div class="related-body">
+          <div class="related-top-row">
+            <span class="related-title">${p.name}</span>
+            <span class="related-tech-tag">${p.tech[0] || ''}</span>
+          </div>
+          <div class="related-cat">${p.catLabel || p.tag}</div>
+          <div class="related-btn-row">
+            <span class="related-view-btn" data-nav-project="${p.slug}">View details
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+            ${p.sourceUrl ? `<a href="${p.sourceUrl}" class="related-code-btn" target="_blank" rel="noopener" onclick="event.stopPropagation()">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.8 5.4.8 11.7c0 5 3.2 9.2 7.7 10.7.6.1.8-.3.8-.6v-2.2c-3.1.7-3.8-1.3-3.8-1.3-.5-1.3-1.2-1.6-1.2-1.6-1-.7.1-.7.1-.7 1.1.1 1.6 1.1 1.6 1.1 1 1.6 2.5 1.2 3.1.9.1-.7.4-1.2.7-1.5-2.5-.3-5.1-1.2-5.1-5.5 0-1.2.4-2.2 1.1-3-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 3 1.1a10.4 10.4 0 015.5 0c2.1-1.4 3-1.1 3-1.1.6 1.5.2 2.6.1 2.9.7.8 1.1 1.8 1.1 3 0 4.3-2.6 5.2-5.1 5.5.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.5-1.5 7.7-5.7 7.7-10.7C23.2 5.4 18.3.5 12 .5z"/></svg>
+              Code</a>` : ''}
+            ${p.demoPassword ? `<span class="related-pw">PW: ${p.demoPassword}</span>` : ''}
+          </div>
+        </div>
+      </div>`;
+  }
+
+  function deviceScreenSvg(p, mode){
+    const isMobile = mode === 'mobile';
+    const w = isMobile ? 300 : 800;
+    const h = isMobile ? 640 : 500;
+    return `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" style="width:100%; display:block;">
+      <defs><linearGradient id="dv-${p.slug}-${mode}" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="${p.grad[0]}"/><stop offset="100%" stop-color="${p.grad[1]}"/>
+      </linearGradient></defs>
+      <rect width="${w}" height="${h}" fill="url(#dv-${p.slug}-${mode})"/>
+      <text x="${w/2}" y="${h*0.42}" font-family="Plus Jakarta Sans, sans-serif" font-size="${isMobile ? 30:46}" font-weight="800" fill="rgba(255,255,255,0.95)" text-anchor="middle" letter-spacing="2">${p.name.toUpperCase()}</text>
+      <text x="${w/2}" y="${h*0.42 + (isMobile?28:38)}" font-family="Plus Jakarta Sans, sans-serif" font-size="${isMobile ? 12:15}" font-weight="600" fill="rgba(255,255,255,0.7)" text-anchor="middle">${(p.catLabel||'').toUpperCase()}</text>
+    </svg>`;
+  }
+
+  let currentPreviewMode = 'desktop';
+
+  function renderDetailPage(slug){
+    const project = findProject(slug);
+    if(!project){
+      // Unknown slug: send back home
+      window.location.hash = '#home';
+      return;
+    }
+    document.body.classList.add('detail-mode');
+
+    document.getElementById('dCrumbTitle').textContent = project.name;
+    document.getElementById('dCategoryText').textContent = (project.catLabel || project.tag).toUpperCase();
+    document.getElementById('dTitle').textContent = project.name;
+    document.getElementById('dDescription').textContent = project.longDesc || project.desc;
+
+    document.getElementById('dTechStack').innerHTML = project.tech.map(t =>
+      `<span class="detail-tech-pill">${t}</span>`).join('');
+
+    document.getElementById('dFeatures').innerHTML = (project.features || []).map(f => `
+      <div class="feature-item">
+        <span class="feature-check"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>
+        <span>${f}</span>
+      </div>`).join('');
+
+    const liveBtn = document.getElementById('dLiveBtn');
+    liveBtn.href = project.url || '#';
+
+    const sourceBtn = document.getElementById('dSourceBtn');
+    if(project.sourceUrl){
+      sourceBtn.href = project.sourceUrl;
+      sourceBtn.style.display = 'inline-flex';
+    } else {
+      sourceBtn.style.display = 'none';
+    }
+
+    const pwWrap = document.getElementById('dDemoPwWrap');
+    pwWrap.innerHTML = project.demoPassword
+      ? `<span class="demo-pw-pill">Demo password: <b>${project.demoPassword}</b></span>`
+      : '';
+
+    document.getElementById('dRelatedProjects').innerHTML =
+      pickRelated(project, 3).map(relatedCardHTML).join('');
+
+    // Reset preview toggle to desktop each time a new project loads (per spec default),
+    // but keep mobile as viable option; on small viewports default to mobile per spec §49.
+    currentPreviewMode = window.innerWidth < 640 ? 'mobile' : 'desktop';
+    updatePreviewToggleUI();
+    renderDevicePreview(project);
+
+    // Wire related-project + breadcrumb + back navigation (delegation, since content is fresh)
+    wireDetailNav();
+
+    // Re-trigger fade-in animation
+    document.querySelectorAll('#detailPage .detail-fade').forEach(function(el, i){
+      el.style.animation = 'none';
+      void el.offsetWidth;
+      el.style.animation = '';
+      el.style.animationDelay = (i * 0.04) + 's';
+    });
+
+    window.scrollTo({top:0, behavior:'instant' in window ? 'instant' : 'auto'});
+  }
+
+  function updatePreviewToggleUI(){
+    const dBtn = document.getElementById('dToggleDesktop');
+    const mBtn = document.getElementById('dToggleMobile');
+    const frame = document.getElementById('dDeviceFrame');
+    if(currentPreviewMode === 'mobile'){
+      dBtn.classList.remove('active');
+      mBtn.classList.add('active');
+      frame.classList.add('mode-mobile');
+    } else {
+      mBtn.classList.remove('active');
+      dBtn.classList.add('active');
+      frame.classList.remove('mode-mobile');
+    }
+  }
+
+  function renderDevicePreview(project){
+    document.getElementById('dDeviceScreen').innerHTML = deviceScreenSvg(project, currentPreviewMode);
+  }
+
+  document.getElementById('dToggleDesktop').addEventListener('click', function(){
+    currentPreviewMode = 'desktop';
+    updatePreviewToggleUI();
+    const p = findProject(parseRoute().slug);
+    if(p) renderDevicePreview(p);
+  });
+  document.getElementById('dToggleMobile').addEventListener('click', function(){
+    currentPreviewMode = 'mobile';
+    updatePreviewToggleUI();
+    const p = findProject(parseRoute().slug);
+    if(p) renderDevicePreview(p);
+  });
+
+  function wireDetailNav(){
+    // Related project cards navigate via hash
+    document.querySelectorAll('#detailPage [data-nav-project]').forEach(function(el){
+      el.addEventListener('click', function(e){
+        if(e.target.closest('.related-code-btn')) return;
+        const slug = el.getAttribute('data-nav-project');
+        window.location.hash = '#/projects/' + slug;
+      });
+      el.addEventListener('keydown', function(e){
+        if(e.key === 'Enter' || e.key === ' '){
+          e.preventDefault();
+          const slug = el.getAttribute('data-nav-project');
+          window.location.hash = '#/projects/' + slug;
+        }
+      });
+    });
+  }
+
+  // "Back to portfolio" / nav links inside the detail page go to home sections
+  document.querySelectorAll('[data-nav-home]').forEach(function(el){
+    el.addEventListener('click', function(e){
+      const targetHash = el.getAttribute('href'); // e.g. #home, #projects, #contact
+      e.preventDefault();
+      showHome(function(){
+        const id = targetHash.replace('#','');
+        const target = document.getElementById(id);
+        if(target){
+          const headerH = siteHeader.offsetHeight;
+          const y = target.getBoundingClientRect().top + window.scrollY - headerH - 14;
+          window.scrollTo({top:y, behavior:'smooth'});
+        }
+      });
+    });
+  });
+
+  function showHome(afterScrollCb){
+    window.location.hash = '#home';
+    // route() will handle showing main / hiding detail; afterScrollCb runs on next tick
+    if(typeof afterScrollCb === 'function'){
+      setTimeout(afterScrollCb, 60);
+    }
+  }
+
+  // Delegate clicks on project cards created on the home page (data-nav-project) that
+  // aren't wrapped by the whole-card handler (title / thumb spans use this too)
+  document.addEventListener('click', function(e){
+    const trigger = e.target.closest('[data-nav-project]');
+    if(trigger && !trigger.closest('#detailPage')){
+      // Avoid double-handling: the card-level listener in the projects script already
+      // navigates on any inner click via bubbling to the card. This delegate covers
+      // cases where the element itself has no ancestor .project-card listener attached
+      // (defensive no-op otherwise).
+    }
+  });
+
+  function route(){
+    const r = parseRoute();
+    if(r.name === 'project'){
+      mainEl.style.display = 'none';
+      detailPage.classList.add('active');
+      renderDetailPage(r.slug);
+    } else {
+      document.body.classList.remove('detail-mode');
+      detailPage.classList.remove('active');
+      mainEl.style.display = '';
+    }
+  }
+
+  window.addEventListener('hashchange', route);
+  // Initial route on load
+  route();
+
+})();
+</script>
+
+
+
+
+</body>
+</html>
