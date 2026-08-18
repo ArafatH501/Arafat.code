@@ -659,7 +659,7 @@ html.dark .icon-sun{display:block;}
   overflow:hidden;
   background:linear-gradient(135deg, #1a2036, #2b3554);
 }
-.project-thumb img{width:100%;height:100%;object-fit:cover; transition:transform .5s var(--ease);}
+.project-thumb img{transition:transform .5s var(--ease);}
 .project-cat-tag{
   position:absolute; top:12px; left:12px;
   padding:5px 12px;
@@ -1220,64 +1220,104 @@ html.dark .demo-pw-pill{background:rgba(255,255,255,0.04);}
 
 .device-frame-wrap{
   display:flex; justify-content:center;
+  padding:0 12px;
 }
 .device-frame{
   position:relative;
-  border-radius:20px;
-  background:#111;
-  padding:14px;
-  box-shadow:0 24px 60px rgba(23,19,8,0.20);
   width:100%;
-  max-width:720px;
-  transition:max-width .4s var(--ease);
+  max-width:780px;
+  transition:max-width .45s var(--ease);
 }
-.device-frame.mode-mobile{
-  max-width:300px;
-  border-radius:34px;
-  padding:14px 10px;
+.device-shell{
+  border-radius:14px 14px 0 0;
+  background:linear-gradient(180deg, #3a3a3f 0%, #222226 42%, #1a1a1d 100%);
+  padding:12px 12px 0;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.10) inset,
+    0 24px 48px rgba(15,20,40,0.16),
+    0 8px 16px rgba(15,20,40,0.08);
 }
-.device-frame-bar{
-  display:flex; align-items:center; gap:6px;
-  padding-bottom:10px;
-}
-.device-frame.mode-mobile .device-frame-bar{
-  justify-content:center;
-  padding-bottom:8px;
-}
-.device-dot{width:8px;height:8px;border-radius:50%; background:#444;}
-.device-notch{
-  display:none;
-}
-.device-frame.mode-mobile .device-notch{
-  display:block;
-  width:60px; height:16px;
-  background:#000;
-  border-radius:0 0 12px 12px;
-  position:absolute; top:0; left:50%; transform:translateX(-50%);
-  z-index:2;
+.device-bezel{
+  position:relative;
+  border-radius:6px;
+  overflow:hidden;
+  background:#080808;
+  border:1px solid rgba(0,0,0,0.45);
 }
 .device-screen{
-  border-radius:10px;
   overflow:hidden;
   background:#0a0a0a;
-  max-height:600px;
-  overflow-y:auto;
-  scrollbar-width:thin;
+  aspect-ratio:16/10;
+}
+.device-screen img,
+.device-screen svg{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:top center;
+  display:block;
+}
+.monitor-chin{
+  height:16px;
+  background:linear-gradient(180deg, #1e1e22, #141416);
+  border-radius:0 0 4px 4px;
+}
+.monitor-stand{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.monitor-neck{
+  width:68px;
+  height:44px;
+  background:linear-gradient(180deg, #2e2e32, #1a1a1d);
+  clip-path:polygon(20% 0, 80% 0, 100% 100%, 0 100%);
+}
+.monitor-base{
+  width:148px;
+  height:8px;
+  border-radius:0 0 10px 10px;
+  background:linear-gradient(180deg, #2a2a2e, #121214);
+  box-shadow:0 6px 16px rgba(15,20,40,0.12);
+}
+.device-island{display:none;}
+.device-frame.mode-mobile{
+  max-width:280px;
+}
+.device-frame.mode-mobile .device-shell{
+  border-radius:44px;
+  padding:10px;
+  background:linear-gradient(145deg, #3a3a3f 0%, #1c1c1f 50%, #141416 100%);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.07) inset,
+    0 32px 64px rgba(15,20,40,0.20),
+    0 12px 24px rgba(15,20,40,0.10);
+}
+.device-frame.mode-mobile .device-bezel{
+  border-radius:34px;
+  border-color:rgba(0,0,0,0.6);
 }
 .device-frame.mode-mobile .device-screen{
-  border-radius:22px;
   aspect-ratio:9/19.5;
-  max-height:640px;
+  border-radius:34px;
 }
-.device-screen img{width:100%; display:block;}
-.device-frame-home{
+.device-frame.mode-mobile .monitor-chin,
+.device-frame.mode-mobile .monitor-stand{
   display:none;
-  justify-content:center;
-  padding-top:8px;
 }
-.device-frame.mode-mobile .device-frame-home{display:flex;}
-.device-frame-home span{
-  width:100px; height:4px; border-radius:4px; background:#444;
+.device-frame.mode-mobile .device-island{
+  display:block;
+  position:absolute;
+  top:18px;
+  left:50%;
+  transform:translateX(-50%);
+  width:88px;
+  height:26px;
+  background:#000;
+  border-radius:18px;
+  z-index:3;
+  pointer-events:none;
+  box-shadow:0 0 0 1px rgba(255,255,255,0.04);
 }
 
 /* CTA (detail page) */
@@ -1327,6 +1367,30 @@ html.dark .demo-pw-pill{background:rgba(255,255,255,0.04);}
 .dcta-btn-primary svg, .dcta-btn-ghost svg{width:14px;height:14px;}
 
 .detail-footer-wrap{margin-top:0;}
+
+/* Project card dual-image hover + editor */
+.project-thumb .project-thumb-bg{position:absolute; inset:0; z-index:0}
+.project-img-wrap{position:absolute; inset:0; z-index:1}
+.project-img-wrap img{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit:cover; object-position:center top;
+  display:block;
+}
+.project-img-wrap img.img-hover{opacity:0; transition:opacity .28s ease}
+.project-thumb:hover .project-img-wrap img.img-hover{opacity:1}
+.image-edit-btn{display:none}
+
+/* Simple modal for managing two images per project */
+.image-modal-backdrop{position:fixed; inset:0; background:rgba(8,10,12,0.6); display:flex; align-items:center; justify-content:center; z-index:9999}
+.image-modal{background:var(--panel-bg,#fff); color:var(--text,#111); padding:18px; border-radius:12px; width:92%; max-width:720px; box-shadow:0 20px 50px rgba(11,14,18,0.6);}
+.image-modal h3{margin:0 0 12px 0}
+.image-modal .img-row{display:flex; gap:12px}
+.image-modal .img-preview{flex:1; min-height:140px; border-radius:8px; background:#f3f3f3; display:flex; align-items:center; justify-content:center; overflow:hidden}
+.image-modal .img-preview img{width:100%; height:100%; object-fit:cover}
+.image-modal .controls{margin-top:12px; display:flex; gap:8px; justify-content:flex-end}
+.image-modal input[type=file]{display:block}
+.image-modal .muted{font-size:13px; color:var(--detail-muted)}
 </style>
 </head>
 <body>
@@ -1710,12 +1774,17 @@ html.dark .demo-pw-pill{background:rgba(255,255,255,0.04);}
         </div>
         <div class="device-frame-wrap">
           <div class="device-frame" id="dDeviceFrame">
-            <div class="device-notch" aria-hidden="true"></div>
-            <div class="device-frame-bar" aria-hidden="true">
-              <span class="device-dot"></span><span class="device-dot"></span><span class="device-dot"></span>
+            <div class="device-shell">
+              <div class="device-bezel">
+                <div class="device-island" aria-hidden="true"></div>
+                <div class="device-screen" id="dDeviceScreen"></div>
+              </div>
+              <div class="monitor-chin" aria-hidden="true"></div>
             </div>
-            <div class="device-screen" id="dDeviceScreen"></div>
-            <div class="device-frame-home" aria-hidden="true"><span></span></div>
+            <div class="monitor-stand" aria-hidden="true">
+              <div class="monitor-neck"></div>
+              <div class="monitor-base"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -2002,6 +2071,10 @@ html.dark .demo-pw-pill{background:rgba(255,255,255,0.04);}
   const projects = [
     {
       slug:"otap", name:"OTAP", category:"ecommerce", tag:"eCommerce",
+      displayImg:"assets/lunox/Lunox-header.png",
+      hoverImg:"assets/lunox/Lunox-footer.png",
+      desktopImg:"assets/lunox/Lunox-desktop.png",
+      mobileImg:"assets/lunox/Lunox-mobile.png",
       catLabel:"Anime Lifestyle & Collectibles Store",
       desc:"Anime lifestyle & collectibles store",
       longDesc:"Custom Shopify 2.0 theme for a cyberpunk anime lifestyle brand. Built for collectors of premium anime figures, cosplay apparel, and limited-edition art collectibles. Features 8 fully designed pages including a lore-driven Story page, Community hub, masonry Gallery, and an encrypted Contact terminal — all wrapped in a Neo-Tokyo cyberpunk aesthetic.",
@@ -2011,6 +2084,10 @@ html.dark .demo-pw-pill{background:rgba(255,255,255,0.04);}
     },
     {
       slug:"voltix", name:"VOLTIX", category:"webapps", tag:"Automotive",
+      displayImg:"assets/voltix/Voltix-display.png",
+      hoverImg:"assets/voltix/Voltix-hover.png",
+      desktopImg:"assets/voltix/Voltix-desktop.png",
+      mobileImg:"assets/voltix/Voltix-mobile.png",
       catLabel:"3D Interactive Car Showcase",
       desc:"3D interactive car showcase",
       longDesc:"An immersive 3D car configurator built with Three.js and GSAP. Users can rotate, customize paint finishes, and explore trim packages in real time, with cinematic camera transitions between vehicle angles.",
@@ -2020,6 +2097,10 @@ html.dark .demo-pw-pill{background:rgba(255,255,255,0.04);}
     },
     {
       slug:"heyya", name:"Heyye", category:"ecommerce", tag:"Supplements",
+      displayImg:"assets/heyya/Heyye-display.png",
+      hoverImg:"assets/heyya/Heyye-hover.png",
+      desktopImg:"assets/heyya/Heyye-desktop.png",
+      mobileImg:"assets/heyya/Heyye-mobile.png",
       catLabel:"Kid Supplements",
       desc:"KOL supplements store",
       longDesc:"A conversion-focused Shopify store for a children's calm & focus supplement brand, built around influencer-driven storytelling, subscription bundles, and a fast, trust-building checkout flow.",
@@ -2029,6 +2110,10 @@ html.dark .demo-pw-pill{background:rgba(255,255,255,0.04);}
     },
     {
       slug:"bro-compagnie", name:"Bro & Compagnie", category:"websites", tag:"Automotive",
+      displayImg:"assets/bro-compagnie/Bro-Compagnie-display.png",
+      hoverImg:"assets/bro-compagnie/Bro-Compagnie-hover.png",
+      desktopImg:"assets/bro-compagnie/Bro-Compagnie-desktop.png",
+      mobileImg:"assets/bro-compagnie/Bro-Compagnie-mobile.png",
       catLabel:"Pet Care Services",
       desc:"Part car services",
       longDesc:"A bilingual service-booking website for a pet care company, combining a warm, approachable design with a streamlined appointment request flow and service area lookup.",
@@ -2038,6 +2123,10 @@ html.dark .demo-pw-pill{background:rgba(255,255,255,0.04);}
     },
     {
       slug:"sweetpaw", name:"SweetPaw", category:"ecommerce", tag:"Pets",
+      displayImg:"assets/sweetpaw/SweetPaw-display.png",
+      hoverImg:"assets/sweetpaw/SweetPaw-hover.png",
+      desktopImg:"assets/sweetpaw/SweetPaw-desktop.png",
+      mobileImg:"assets/sweetpaw/SweetPaw-mobile.png",
       catLabel:"Natural Dog Chews Store",
       desc:"Natural dog chews store",
       longDesc:"A playful, trust-driven Shopify store for an all-natural dog chews brand, with ingredient sourcing stories, subscription options, and a size/breed recommendation quiz.",
@@ -2047,6 +2136,10 @@ html.dark .demo-pw-pill{background:rgba(255,255,255,0.04);}
     },
     {
       slug:"manga-mint", name:"Manga Mint", category:"websites", tag:"Gaming",
+      displayImg:"assets/manga-mint/Manga-Mint-display.png",
+      hoverImg:"assets/manga-mint/Manga-Mint-hover.png",
+      desktopImg:"assets/manga-mint/Manga-Mint-desktop.png",
+      mobileImg:"assets/manga-mint/Manga-Mint-mobile.png",
       catLabel:"Anime & Manga Store",
       desc:"Anime & manga store",
       longDesc:"A vibrant storefront concept for an anime & manga retailer, featuring genre-based discovery, a volume tracker for ongoing series, and pre-order drop timers.",
@@ -2056,6 +2149,10 @@ html.dark .demo-pw-pill{background:rgba(255,255,255,0.04);}
     },
     {
       slug:"cybernexus", name:"CyberNexus", category:"webapps", tag:"AI",
+      displayImg:"assets/cybernexus/CyberNexus-display.png",
+      hoverImg:"assets/cybernexus/CyberNexus-hover.png",
+      desktopImg:"assets/cybernexus/CyberNexus-desktop.png",
+      mobileImg:"assets/cybernexus/CyberNexus-mobile.png",
       catLabel:"Online AI Learning Platform",
       desc:"Online AI learning platform",
       longDesc:"A course platform for AI/ML learners with progress tracking, interactive coding sandboxes, and a cohort-based community layer for peer accountability.",
@@ -2065,6 +2162,10 @@ html.dark .demo-pw-pill{background:rgba(255,255,255,0.04);}
     },
     {
       slug:"vantique", name:"Vantique", category:"ecommerce", tag:"Fashion",
+      displayImg:"assets/vantique/Vantique-display.png",
+      hoverImg:"assets/vantique/Vantique-hover.png",
+      desktopImg:"assets/vantique/Vantique-desktop.png",
+      mobileImg:"assets/vantique/Vantique-mobile.png",
       catLabel:"Luxury Streetwear Brand",
       desc:"Luxury streetwear brand",
       longDesc:"A moody, editorial Shopify build for a luxury streetwear label, with lookbook-driven storytelling, limited drop mechanics, and a members-only early-access tier.",
@@ -2074,6 +2175,10 @@ html.dark .demo-pw-pill{background:rgba(255,255,255,0.04);}
     },
     {
       slug:"timeforge", name:"TIMEFORGE", category:"ecommerce", tag:"Watch",
+      displayImg:"assets/timeforge/TIMEFORGE-display.png",
+      hoverImg:"assets/timeforge/TIMEFORGE-hover.png",
+      desktopImg:"assets/timeforge/TIMEFORGE-desktop.png",
+      mobileImg:"assets/timeforge/TIMEFORGE-mobile.png",
       catLabel:"Luxury Watch Collection",
       desc:"Luxury watch collection",
       longDesc:"A premium Shopify experience for a luxury watch collection, pairing macro product photography with detailed craftsmanship stories and a concierge-style enquiry flow.",
@@ -2083,6 +2188,10 @@ html.dark .demo-pw-pill{background:rgba(255,255,255,0.04);}
     },
     {
       slug:"northline-studio", name:"Northline Studio", category:"websites", tag:"Agency",
+      displayImg:"assets/northline-studio/Northline-Studio-display.png",
+      hoverImg:"assets/northline-studio/Northline-Studio-hover.png",
+      desktopImg:"assets/northline-studio/Northline-Studio-desktop.png",
+      mobileImg:"assets/northline-studio/Northline-Studio-mobile.png",
       catLabel:"Creative Agency Portfolio",
       desc:"Creative agency portfolio site",
       longDesc:"A confident, motion-driven portfolio site for a creative agency, built to showcase case studies with scroll-triggered reveals and a fast, minimal case-study template.",
@@ -2092,6 +2201,10 @@ html.dark .demo-pw-pill{background:rgba(255,255,255,0.04);}
     },
     {
       slug:"brewcart", name:"BrewCart", category:"ecommerce", tag:"Food & Bev",
+      displayImg:"assets/brewcart/BrewCart-display.png",
+      hoverImg:"assets/brewcart/BrewCart-hover.png",
+      desktopImg:"assets/brewcart/BrewCart-desktop.png",
+      mobileImg:"assets/brewcart/BrewCart-mobile.png",
       catLabel:"Specialty Coffee Subscription",
       desc:"Specialty coffee subscription store",
       longDesc:"A warm, tactile Shopify subscription store for a specialty coffee roaster, with a roast-profile quiz, flexible delivery cadence, and origin-story content for each bean.",
@@ -2134,7 +2247,7 @@ html.dark .demo-pw-pill{background:rgba(255,255,255,0.04);}
     </svg>`;
   }
   function blogThumbSvg(post, idx){
-    return `<svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+    return `<svg viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
       <defs><linearGradient id="bg-${idx}" x1="0" y1="0" x2="1" y2="1">
         <stop offset="0%" stop-color="${post.tagGrad[0]}"/><stop offset="100%" stop-color="${post.tagGrad[1]}"/>
       </linearGradient></defs>
@@ -2164,7 +2277,11 @@ html.dark .demo-pw-pill{background:rgba(255,255,255,0.04);}
     return `
       <article class="project-card glass" data-slug="${p.slug}" tabindex="0" role="link" aria-label="View details for ${p.name}">
         <div class="project-thumb" data-nav-project="${p.slug}">
-          ${projectThumbSvg(p)}
+          <div class="project-thumb-bg">${projectThumbSvg(p)}</div>
+          <div class="project-img-wrap" data-slug="${p.slug}">
+            <img class="proj-img img-default" alt="${p.name} display image" data-img-type="display">
+            <img class="proj-img img-hover" alt="${p.name} hover image" data-img-type="hover">
+          </div>
           <span class="project-cat-tag">${p.tag}</span>
           <a href="${p.url}" class="project-link-icon" aria-label="Open ${p.name} live site" onclick="event.stopPropagation()" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h7v7M21 3l-9 9M5 5h5M5 5v14h14v-5"/></svg>
@@ -2280,6 +2397,51 @@ html.dark .demo-pw-pill{background:rgba(255,255,255,0.04);}
   // Expose data for the router/detail-page script
   window.__portfolioData = { projects, catLabels, accentPalette, projectThumbSvg };
 
+  /* ============ DUAL-IMAGE STORAGE & EDITOR (localStorage-backed) ============ */
+  const _imgStorageKey = (slug) => 'projImgs:' + slug;
+  function getStoredImages(slug){
+    try{
+      const raw = localStorage.getItem(_imgStorageKey(slug));
+      if(!raw) return null;
+      return JSON.parse(raw);
+    } catch(e){ return null; }
+  }
+  function findProject(slug){ return projects.find(p => p.slug === slug); }
+  function saveProjectImages(slug, imgs){
+    localStorage.setItem(_imgStorageKey(slug), JSON.stringify(imgs));
+  }
+  function deleteProjectImages(slug){
+    localStorage.removeItem(_imgStorageKey(slug));
+    loadProjectImagesIntoCards();
+  }
+
+  function loadProjectImagesIntoCards(){
+    document.querySelectorAll('.project-img-wrap').forEach(function(wrap){
+      const slug = wrap.getAttribute('data-slug');
+      const imgs = getStoredImages(slug);
+      const imgDisplay = wrap.querySelector('img[data-img-type="display"]');
+      const imgHover = wrap.querySelector('img[data-img-type="hover"]');
+      const parent = wrap.closest('.project-thumb');
+      const bg = parent.querySelector('.project-thumb-bg');
+      const proj = findProject(slug) || {};
+      const srcDisplay = (imgs && imgs.displayImg) ? imgs.displayImg : (proj.displayImg || '');
+      const srcHover = (imgs && imgs.hoverImg) ? imgs.hoverImg : (proj.hoverImg || '');
+      if(srcDisplay){ imgDisplay.src = srcDisplay; imgDisplay.style.display = 'block'; bg.style.display = 'none'; } else { imgDisplay.src = ''; imgDisplay.style.display = 'none'; bg.style.display = ''; }
+      if(srcHover){ imgHover.src = srcHover; imgHover.style.display = 'block'; } else { imgHover.src = ''; imgHover.style.display = 'none'; }
+    });
+  }
+
+  // Ensure project images are populated after each render call
+  if(typeof renderProjects === 'function'){
+    const _origRenderProjects = renderProjects;
+    renderProjects = function(){
+      _origRenderProjects();
+      loadProjectImagesIntoCards();
+    };
+  }
+
+  try{ loadProjectImagesIntoCards(); } catch(e){}
+
 })();
 </script>
 
@@ -2349,9 +2511,15 @@ html.dark .demo-pw-pill{background:rgba(255,255,255,0.04);}
 
   function deviceScreenSvg(p, mode){
     const isMobile = mode === 'mobile';
+    const imageUrl = isMobile ? p.mobileImg : p.desktopImg;
+
+    if(imageUrl){
+      return `<img src="${imageUrl}" alt="${p.name} ${isMobile ? 'mobile' : 'desktop'} preview" loading="lazy" />`;
+    }
+
     const w = isMobile ? 300 : 800;
     const h = isMobile ? 640 : 500;
-    return `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" style="width:100%; display:block;">
+    return `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
       <defs><linearGradient id="dv-${p.slug}-${mode}" x1="0" y1="0" x2="1" y2="1">
         <stop offset="0%" stop-color="${p.grad[0]}"/><stop offset="100%" stop-color="${p.grad[1]}"/>
       </linearGradient></defs>
