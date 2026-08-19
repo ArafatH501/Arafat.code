@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>arafat.code Front-end &amp; Shopify Developer</title>
+<title>arafat.code — Front-end &amp; Shopify Developer</title>
 <meta name="description" content="Arafat Hasan — full-stack developer in Dhaka building fast, modern, high-converting web experiences with the MERN stack & Shopify 2.0.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -647,7 +647,7 @@ html.dark .icon-sun{display:block;}
   overflow:hidden;
   background:linear-gradient(135deg, #1a2036, #2b3554);
 }
-.project-thumb img{width:100%;height:100%;object-fit:cover; transition:transform .5s var(--ease);}
+.project-thumb img{transition:transform .5s var(--ease);}
 .project-cat-tag{
   position:absolute; top:12px; left:12px;
   padding:5px 12px;
@@ -1208,70 +1208,104 @@ html.dark .demo-pw-pill{background:rgba(255,255,255,0.04);}
 
 .device-frame-wrap{
   display:flex; justify-content:center;
+  padding:0 12px;
 }
 .device-frame{
   position:relative;
-  border-radius:20px;
-  background:#111;
-  padding:14px;
-  box-shadow:0 24px 60px rgba(23,19,8,0.20);
   width:100%;
-  max-width:720px;
-  transition:max-width .4s var(--ease);
+  max-width:780px;
+  transition:max-width .45s var(--ease);
 }
-.device-frame.mode-mobile{
-  max-width:300px;
-  border-radius:34px;
-  padding:14px 10px;
+.device-shell{
+  border-radius:14px 14px 0 0;
+  background:linear-gradient(180deg, #3a3a3f 0%, #222226 42%, #1a1a1d 100%);
+  padding:12px 12px 0;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.10) inset,
+    0 24px 48px rgba(15,20,40,0.16),
+    0 8px 16px rgba(15,20,40,0.08);
 }
-.device-frame-bar{
-  display:flex; align-items:center; gap:6px;
-  padding-bottom:10px;
+.device-bezel{
+  position:relative;
+  border-radius:6px;
+  overflow:hidden;
+  background:#080808;
+  border:1px solid rgba(0,0,0,0.45);
 }
-.device-frame.mode-mobile .device-frame-bar{
-  justify-content:center;
-  padding-bottom:8px;
-}
-.device-dot{width:8px;height:8px;border-radius:50%; background:#444;}
-.device-notch{
-  display:none;
-}
-.device-frame.mode-mobile .device-notch{
-  display:block;
-  width:60px; height:16px;
-  background:#000;
-  border-radius:0 0 12px 12px;
-  position:absolute; top:0; left:50%; transform:translateX(-50%);
-  z-index:2;
-}
-/* ============================================================
-   FIX: device-screen no longer clips/scrolls internally.
-   The container grows to the image's natural height instead of
-   being capped at a fixed max-height with its own scrollbar.
-   ============================================================ */
 .device-screen{
-  border-radius:10px;
   overflow:hidden;
   background:#0a0a0a;
-  height:auto;
+  aspect-ratio:16/10;
 }
-.device-screen img{
+.device-screen img,
+.device-screen svg{
   width:100%;
-  height:auto;
+  height:100%;
+  object-fit:contain;
+  object-position:top center;
   display:block;
 }
+.monitor-chin{
+  height:16px;
+  background:linear-gradient(180deg, #1e1e22, #141416);
+  border-radius:0 0 4px 4px;
+}
+.monitor-stand{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.monitor-neck{
+  width:68px;
+  height:44px;
+  background:linear-gradient(180deg, #2e2e32, #1a1a1d);
+  clip-path:polygon(20% 0, 80% 0, 100% 100%, 0 100%);
+}
+.monitor-base{
+  width:148px;
+  height:8px;
+  border-radius:0 0 10px 10px;
+  background:linear-gradient(180deg, #2a2a2e, #121214);
+  box-shadow:0 6px 16px rgba(15,20,40,0.12);
+}
+.device-island{display:none;}
+.device-frame.mode-mobile{
+  max-width:280px;
+}
+.device-frame.mode-mobile .device-shell{
+  border-radius:44px;
+  padding:10px;
+  background:linear-gradient(145deg, #3a3a3f 0%, #1c1c1f 50%, #141416 100%);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.07) inset,
+    0 32px 64px rgba(15,20,40,0.20),
+    0 12px 24px rgba(15,20,40,0.10);
+}
+.device-frame.mode-mobile .device-bezel{
+  border-radius:34px;
+  border-color:rgba(0,0,0,0.6);
+}
 .device-frame.mode-mobile .device-screen{
-  border-radius:22px;
-  height:auto;
+  aspect-ratio:9/19.5;
+  border-radius:34px;
 }
-.device-frame-home{
+.device-frame.mode-mobile .monitor-chin,
+.device-frame.mode-mobile .monitor-stand{
   display:none;
-  justify-content:center;
-  padding-top:8px;
 }
-.device-frame.mode-mobile .device-frame-home{display:flex;}
-.device-frame-home span{
-  width:100px; height:4px; border-radius:4px; background:#444;
+.device-frame.mode-mobile .device-island{
+  display:block;
+  position:absolute;
+  top:18px;
+  left:50%;
+  transform:translateX(-50%);
+  width:88px;
+  height:26px;
+  background:#000;
+  border-radius:18px;
+  z-index:3;
+  pointer-events:none;
+  box-shadow:0 0 0 1px rgba(255,255,255,0.04);
 }
 
 /* CTA (detail page) */
@@ -1323,10 +1357,14 @@ html.dark .demo-pw-pill{background:rgba(255,255,255,0.04);}
 .detail-footer-wrap{margin-top:0;}
 
 /* Project card dual-image hover + editor */
-.project-thumb{position:relative; overflow:hidden;}
 .project-thumb .project-thumb-bg{position:absolute; inset:0; z-index:0}
-.project-img-wrap{position:relative; width:100%; height:100%; z-index:1}
-.project-img-wrap img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block}
+.project-img-wrap{position:absolute; inset:0; z-index:1}
+.project-img-wrap img{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit:cover; object-position:center top;
+  display:block;
+}
 .project-img-wrap img.img-hover{opacity:0; transition:opacity .28s ease}
 .project-thumb:hover .project-img-wrap img.img-hover{opacity:1}
 .image-edit-btn{display:none}
@@ -1341,22 +1379,6 @@ html.dark .demo-pw-pill{background:rgba(255,255,255,0.04);}
 .image-modal .controls{margin-top:12px; display:flex; gap:8px; justify-content:flex-end}
 .image-modal input[type=file]{display:block}
 .image-modal .muted{font-size:13px; color:var(--detail-muted)}
-
-/* Project card video (3rd card only) */
-.project-thumb video.project-video{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-  z-index:1;
-  transition:transform .5s var(--ease);
-  background:#0a0a0a;
-}
-@media(hover:hover){
-  .project-card:hover .project-thumb video.project-video{transform:scale(1.06);}
-}
 </style>
 </head>
 <body>
@@ -1431,7 +1453,7 @@ html.dark .demo-pw-pill{background:rgba(255,255,255,0.04);}
     <div class="container">
       <div class="hero-grid">
         <div class="hero-left">
-          <span class="badge glass-strong reveal"><span class="badge-dot"></span> Available for work</span>
+          <span class="badge glass-strong reveal"><span class="badge-dot"></span> Available for freelance</span>
           <h1 class="hero-title reveal">I build Front-end &amp;<br>
             <span class="grad-text">Shopify stores</span><br>
             <span class="soft">that convert.</span>
@@ -1441,7 +1463,7 @@ html.dark .demo-pw-pill{background:rgba(255,255,255,0.04);}
             <a href="#projects" class="btn btn-primary">See my work
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </a>
-            <a href="" class="btn btn-ghost" id="downloadCvBtn">Download CV
+            <a href="#" class="btn btn-ghost" id="downloadCvBtn">Download CV
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg>
             </a>
           </div>
@@ -1641,15 +1663,15 @@ html.dark .demo-pw-pill{background:rgba(255,255,255,0.04);}
           <div class="contact-info-grid">
             <div class="contact-info-card glass">
               <div class="contact-info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z" opacity="0"/><path d="M3 6l9 6 9-6M4 6h16v12H4z"/></svg></div>
-              <div><div class="contact-info-label">Email</div><div class="contact-info-value">arafathasanprince501@gmail.com</div></div>
+              <div><div class="contact-info-label">Email</div><div class="contact-info-value">arafat.dev@gmail.com</div></div>
             </div>
             <div class="contact-info-card glass">
               <div class="contact-info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.5 7-11.5A7 7 0 105 9.5C5 14.5 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.4"/></svg></div>
-              <div><div class="contact-info-label">Location</div><div class="contact-info-value">Namapara, Khilkhet, Dhaka, Bangladesh</div></div>
+              <div><div class="contact-info-label">Location</div><div class="contact-info-value">Dhaka, Bangladesh</div></div>
             </div>
             <div class="contact-info-card glass">
               <div class="contact-info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3-8.7A2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.3 1.8.6 2.7a2 2 0 01-.5 2.1L8 9.7a16 16 0 006 6l1.2-1.2a2 2 0 012.1-.5c.9.3 1.8.5 2.7.6a2 2 0 011.7 2.1z"/></svg></div>
-              <div><div class="contact-info-label">Phone</div><div class="contact-info-value">+88 016298-06321</div></div>
+              <div><div class="contact-info-label">Phone</div><div class="contact-info-value">+880 1676-001234</div></div>
             </div>
             <div class="contact-info-card glass">
               <div class="contact-info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
@@ -1737,12 +1759,17 @@ html.dark .demo-pw-pill{background:rgba(255,255,255,0.04);}
         </div>
         <div class="device-frame-wrap">
           <div class="device-frame" id="dDeviceFrame">
-            <div class="device-notch" aria-hidden="true"></div>
-            <div class="device-frame-bar" aria-hidden="true">
-              <span class="device-dot"></span><span class="device-dot"></span><span class="device-dot"></span>
+            <div class="device-shell">
+              <div class="device-bezel">
+                <div class="device-island" aria-hidden="true"></div>
+                <div class="device-screen" id="dDeviceScreen"></div>
+              </div>
+              <div class="monitor-chin" aria-hidden="true"></div>
             </div>
-            <div class="device-screen" id="dDeviceScreen"></div>
-            <div class="device-frame-home" aria-hidden="true"><span></span></div>
+            <div class="monitor-stand" aria-hidden="true">
+              <div class="monitor-neck"></div>
+              <div class="monitor-base"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -1807,7 +1834,7 @@ html.dark .demo-pw-pill{background:rgba(255,255,255,0.04);}
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2025 Arafat Hasan. All rights reserved.</span>
+      <span>© 2025 Arafat Shah Diner. All rights reserved.</span>
       <div class="footer-legal">
         <a href="#">Privacy Policy</a>
         <a href="#">Terms of Service</a>
@@ -2012,30 +2039,30 @@ html.dark .demo-pw-pill{background:rgba(255,255,255,0.04);}
       hoverImg:"assets/lunox/Lunox-footer.png",
       desktopImg:"assets/lunox/Lunox-desktop.png",
       mobileImg:"assets/lunox/Lunox-mobile.png",
-      catLabel:"Christmas projector light",
-      desc:"Christmas projector light",
+      catLabel:"Anime Lifestyle & Collectibles Store",
+      desc:"Anime lifestyle & collectibles store",
       longDesc:"Custom Shopify 2.0 theme for a cyberpunk anime lifestyle brand. Built for collectors of premium anime figures, cosplay apparel, and limited-edition art collectibles. Features 8 fully designed pages including a lore-driven Story page, Community hub, masonry Gallery, and an encrypted Contact terminal — all wrapped in a Neo-Tokyo cyberpunk aesthetic.",
       tech:["Shopify 2.0","Liquid","CSS","JavaScript"],
       features:["8 fully built pages","16-product catalog with filtering","Lore-driven story timeline","Limited edition drop countdown","Community & Discord hub","Masonry gallery grid","Encrypted contact terminal","Mobile-first responsive design","SEO optimized"],
-      grad:["#0f2027","#2c5364"], url:"#", sourceUrl:"#", demoPassword:"1", accentColor:"#ff8fb3"
+      grad:["#0f2027","#2c5364"], url:"https://christmas-projector-lights.myshopify.com/", sourceUrl:"#", demoPassword:"1", accentColor:"#ff8fb3"
     },
     {
-      slug:"Butchery", name:"BUTCHERY", category:"webapps", tag:"Automotive",
-      displayImg:"assets/butchery/butchery-header.png",
-      hoverImg:"assets/butchery/butchery-footer.png",
-      desktopImg:"assets/butchery/butchery-desktop.png",
-      mobileImg:"assets/butchery/butchery-mobile.png",
-      catLabel:"Meat shop & Butchery",
-      desc:"Meat shop & Butchery",
+      slug:"voltix", name:"VOLTIX", category:"webapps", tag:"Automotive",
+      displayImg:"assets/voltix/Voltix-display.png",
+      hoverImg:"assets/voltix/Voltix-hover.png",
+      desktopImg:"assets/voltix/Voltix-desktop.png",
+      mobileImg:"assets/voltix/Voltix-mobile.png",
+      catLabel:"3D Interactive Car Showcase",
+      desc:"3D interactive car showcase",
       longDesc:"An immersive 3D car configurator built with Three.js and GSAP. Users can rotate, customize paint finishes, and explore trim packages in real time, with cinematic camera transitions between vehicle angles.",
       tech:["Three.js","GSAP","React","WebGL"],
       features:["Real-time 3D car rotation","Live paint & trim customizer","Cinematic camera transitions","Performance spec comparison","Optimized WebGL asset loading","Mobile touch gesture support","Dealer locator integration","SEO optimized"],
       grad:["#3a3a3a","#111"], url:"#", sourceUrl:"#", demoPassword:"1", accentColor:"#ff9d4d"
     },
     {
-      slug:"fanta", name:"FANTA", category:"ecommerce", tag:"Supplements",
-      isVideo:true,
-      video:"assets/fanta/fanta-demo.mp4",
+      slug:"heyya", name:"Heyye", category:"ecommerce", tag:"Supplements",
+      displayImg:"assets/heyya/Heyye-display.png",
+      hoverImg:"assets/heyya/Heyye-hover.png",
       desktopImg:"assets/heyya/Heyye-desktop.png",
       mobileImg:"assets/heyya/Heyye-mobile.png",
       catLabel:"Kid Supplements",
@@ -2046,11 +2073,11 @@ html.dark .demo-pw-pill{background:rgba(255,255,255,0.04);}
       grad:["#f5567a","#f2a154"], url:"#", sourceUrl:"#", demoPassword:"1", accentColor:"#34d399"
     },
     {
-      slug:"aurelium", name:"AURELIUM", category:"websites", tag:"Automotive",
-      displayImg:"assets/aurelium/aurelium-header.png",
-      hoverImg:"assets/aurelium/aurelium-footer.png",
-      desktopImg:"assets/aurelium/aurelium-desktop.png",
-      mobileImg:"assets/aurelium/aurelium-mobile.png",
+      slug:"bro-compagnie", name:"Bro & Compagnie", category:"websites", tag:"Automotive",
+      displayImg:"assets/bro-compagnie/Bro-Compagnie-display.png",
+      hoverImg:"assets/bro-compagnie/Bro-Compagnie-hover.png",
+      desktopImg:"assets/bro-compagnie/Bro-Compagnie-desktop.png",
+      mobileImg:"assets/bro-compagnie/Bro-Compagnie-mobile.png",
       catLabel:"Pet Care Services",
       desc:"Part car services",
       longDesc:"A bilingual service-booking website for a pet care company, combining a warm, approachable design with a streamlined appointment request flow and service area lookup.",
@@ -2059,11 +2086,11 @@ html.dark .demo-pw-pill{background:rgba(255,255,255,0.04);}
       grad:["#2b3d2f","#1a241d"], url:"#", sourceUrl:"#", demoPassword:"", accentColor:"#8b5cf6"
     },
     {
-      slug:"zhuxin", name:"ZHUXIN", category:"ecommerce", tag:"Pets",
-      displayImg:"assets/zhuxin/zhuxin-header.png",
-      hoverImg:"assets/zhuxin/zhuxin-footer.png",
-      desktopImg:"assets/zhuxin/zhuxin-desktop.png",
-      mobileImg:"assets/zhuxin/zhuxin-mobile.png",
+      slug:"sweetpaw", name:"SweetPaw", category:"ecommerce", tag:"Pets",
+      displayImg:"assets/sweetpaw/SweetPaw-display.png",
+      hoverImg:"assets/sweetpaw/SweetPaw-hover.png",
+      desktopImg:"assets/sweetpaw/SweetPaw-desktop.png",
+      mobileImg:"assets/sweetpaw/SweetPaw-mobile.png",
       catLabel:"Natural Dog Chews Store",
       desc:"Natural dog chews store",
       longDesc:"A playful, trust-driven Shopify store for an all-natural dog chews brand, with ingredient sourcing stories, subscription options, and a size/breed recommendation quiz.",
@@ -2073,10 +2100,10 @@ html.dark .demo-pw-pill{background:rgba(255,255,255,0.04);}
     },
     {
       slug:"manga-mint", name:"Manga Mint", category:"websites", tag:"Gaming",
-      displayImg:"assets/manga-mint/manga-header.png",
-      hoverImg:"assets/manga-mint/manga-footer.png",
-      desktopImg:"assets/manga-mint/manga-desktop.png",
-      mobileImg:"assets/manga-mint/manga-mobile.png",
+      displayImg:"assets/manga-mint/Manga-Mint-display.png",
+      hoverImg:"assets/manga-mint/Manga-Mint-hover.png",
+      desktopImg:"assets/manga-mint/Manga-Mint-desktop.png",
+      mobileImg:"assets/manga-mint/Manga-Mint-mobile.png",
       catLabel:"Anime & Manga Store",
       desc:"Anime & manga store",
       longDesc:"A vibrant storefront concept for an anime & manga retailer, featuring genre-based discovery, a volume tracker for ongoing series, and pre-order drop timers.",
@@ -2085,11 +2112,11 @@ html.dark .demo-pw-pill{background:rgba(255,255,255,0.04);}
       grad:["#8a3a1e","#d9622f"], url:"#", sourceUrl:"#", demoPassword:"", accentColor:"#fbbf24"
     },
     {
-      slug:"hawlucha", name:"HAWLUCHA", category:"webapps", tag:"fitness",
-      displayImg:"assets/hawlucha/hawlucha-header.png",
-      hoverImg:"assets/hawlucha/hawlucha-footer.png",
-      desktopImg:"assets/hawlucha/hawlucha-desktop.png",
-      mobileImg:"assets/hawlucha/hawlucha-mobile.png",
+      slug:"cybernexus", name:"CyberNexus", category:"webapps", tag:"AI",
+      displayImg:"assets/cybernexus/CyberNexus-display.png",
+      hoverImg:"assets/cybernexus/CyberNexus-hover.png",
+      desktopImg:"assets/cybernexus/CyberNexus-desktop.png",
+      mobileImg:"assets/cybernexus/CyberNexus-mobile.png",
       catLabel:"Online AI Learning Platform",
       desc:"Online AI learning platform",
       longDesc:"A course platform for AI/ML learners with progress tracking, interactive coding sandboxes, and a cohort-based community layer for peer accountability.",
@@ -2098,11 +2125,11 @@ html.dark .demo-pw-pill{background:rgba(255,255,255,0.04);}
       grad:["#3a0a0a","#0d0d0d"], url:"#", sourceUrl:"#", demoPassword:"", accentColor:"#f472b6"
     },
     {
-      slug:"sage", name:"SAGE", category:"ecommerce", tag:"Fashion",
-      displayImg:"assets/sage/sage-header.png",
-      hoverImg:"assets/sage/sage-footer.png",
-      desktopImg:"assets/sage/sage-desktop.png",
-      mobileImg:"assets/sage/sage-mobile.png",
+      slug:"vantique", name:"Vantique", category:"ecommerce", tag:"Fashion",
+      displayImg:"assets/vantique/Vantique-display.png",
+      hoverImg:"assets/vantique/Vantique-hover.png",
+      desktopImg:"assets/vantique/Vantique-desktop.png",
+      mobileImg:"assets/vantique/Vantique-mobile.png",
       catLabel:"Luxury Streetwear Brand",
       desc:"Luxury streetwear brand",
       longDesc:"A moody, editorial Shopify build for a luxury streetwear label, with lookbook-driven storytelling, limited drop mechanics, and a members-only early-access tier.",
@@ -2111,11 +2138,11 @@ html.dark .demo-pw-pill{background:rgba(255,255,255,0.04);}
       grad:["#111","#3a0d0d"], url:"#", sourceUrl:"#", demoPassword:"1", accentColor:"#38bdf8"
     },
     {
-      slug:"vlora", name:"VLORA", category:"ecommerce", tag:"Watch",
-      displayImg:"assets/Vlora/vlora-header.png",
-      hoverImg:"assets/Vlora/vlora-footer.png",
-      desktopImg:"assets/Vlora/vlora-desktop.png",
-      mobileImg:"assets/Vlora/vlora-mobile.png",
+      slug:"timeforge", name:"TIMEFORGE", category:"ecommerce", tag:"Watch",
+      displayImg:"assets/timeforge/TIMEFORGE-display.png",
+      hoverImg:"assets/timeforge/TIMEFORGE-hover.png",
+      desktopImg:"assets/timeforge/TIMEFORGE-desktop.png",
+      mobileImg:"assets/timeforge/TIMEFORGE-mobile.png",
       catLabel:"Luxury Watch Collection",
       desc:"Luxury watch collection",
       longDesc:"A premium Shopify experience for a luxury watch collection, pairing macro product photography with detailed craftsmanship stories and a concierge-style enquiry flow.",
@@ -2124,11 +2151,11 @@ html.dark .demo-pw-pill{background:rgba(255,255,255,0.04);}
       grad:["#1a1a1a","#000"], url:"#", sourceUrl:"#", demoPassword:"1", accentColor:"#ff8fb3"
     },
     {
-      slug:"Centa Trainer", name:"Centa Trainer", category:"websites", tag:"Agency",
-      displayImg:"assets/centa/centa-header.png",
-      hoverImg:"assets/centa/centa-footer.png",
-      desktopImg:"assets/centa/centa-desktop.png",
-      mobileImg:"assets/centa/centa-mobile.png",
+      slug:"northline-studio", name:"Northline Studio", category:"websites", tag:"Agency",
+      displayImg:"assets/northline-studio/Northline-Studio-display.png",
+      hoverImg:"assets/northline-studio/Northline-Studio-hover.png",
+      desktopImg:"assets/northline-studio/Northline-Studio-desktop.png",
+      mobileImg:"assets/northline-studio/Northline-Studio-mobile.png",
       catLabel:"Creative Agency Portfolio",
       desc:"Creative agency portfolio site",
       longDesc:"A confident, motion-driven portfolio site for a creative agency, built to showcase case studies with scroll-triggered reveals and a fast, minimal case-study template.",
@@ -2136,7 +2163,30 @@ html.dark .demo-pw-pill{background:rgba(255,255,255,0.04);}
       features:["Scroll-triggered case studies","Reusable case-study template","Client logo marquee","Team & culture page","Contact form with brief intake","SEO optimized"],
       grad:["#1e2a4a","#3b4d8c"], url:"#", sourceUrl:"#", demoPassword:"", accentColor:"#ff9d4d"
     },
-    
+    {
+      slug:"brewcart", name:"BrewCart", category:"ecommerce", tag:"Food & Bev",
+      displayImg:"assets/brewcart/BrewCart-display.png",
+      hoverImg:"assets/brewcart/BrewCart-hover.png",
+      desktopImg:"assets/brewcart/BrewCart-desktop.png",
+      mobileImg:"assets/brewcart/BrewCart-mobile.png",
+      catLabel:"Specialty Coffee Subscription",
+      desc:"Specialty coffee subscription store",
+      longDesc:"A warm, tactile Shopify subscription store for a specialty coffee roaster, with a roast-profile quiz, flexible delivery cadence, and origin-story content for each bean.",
+      tech:["Shopify 2.0","Liquid","CSS","JavaScript"],
+      features:["Roast-profile matching quiz","Flexible subscription cadence","Bean origin story pages","Grind-size selector","Gift subscription flow","Loyalty points system","SEO optimized"],
+      grad:["#4a2c17","#7a4a26"], url:"#", sourceUrl:"#", demoPassword:"1", accentColor:"#34d399"
+    },
+    {
+      slug:"taskflow", name:"TaskFlow", category:"webapps", tag:"Productivity",
+      img1:"",
+      img2:"",
+      catLabel:"Team Task & Sprint Management",
+      desc:"Team task & sprint management app",
+      longDesc:"A full-stack MERN application for agile teams to plan sprints, track tasks on a Kanban board, and get real-time updates via WebSockets, with role-based permissions.",
+      tech:["MERN Stack","Socket.io","MongoDB","Express.js"],
+      features:["Real-time Kanban board","Sprint planning & velocity charts","Role-based permissions","Live activity via Socket.io","Task comments & mentions","REST API with JWT auth","Responsive dashboard UI"],
+      grad:["#122036","#2d4a7a"], url:"#", sourceUrl:"#", demoPassword:"", accentColor:"#8b5cf6"
+    }
   ];
 
 
@@ -2190,17 +2240,14 @@ html.dark .demo-pw-pill{background:rgba(255,255,255,0.04);}
   }
 
   function cardHTML(p){
-    const mediaHTML = p.isVideo
-      ? `<video class="project-video" src="${p.video}" autoplay muted loop playsinline webkit-playsinline preload="auto" aria-label="${p.name} showcase video"></video>`
-      : `<div class="project-thumb-bg">${projectThumbSvg(p)}</div>
-          <div class="project-img-wrap" data-slug="${p.slug}">
-            <img class="proj-img img-default" alt="${p.name} display image" data-img-type="display">
-            <img class="proj-img img-hover" alt="${p.name} hover image" data-img-type="hover">
-          </div>`;
     return `
       <article class="project-card glass" data-slug="${p.slug}" tabindex="0" role="link" aria-label="View details for ${p.name}">
         <div class="project-thumb" data-nav-project="${p.slug}">
-          ${mediaHTML}
+          <div class="project-thumb-bg">${projectThumbSvg(p)}</div>
+          <div class="project-img-wrap" data-slug="${p.slug}">
+            <img class="proj-img img-default" alt="${p.name} display image" data-img-type="display">
+            <img class="proj-img img-hover" alt="${p.name} hover image" data-img-type="hover">
+          </div>
           <span class="project-cat-tag">${p.tag}</span>
           <a href="${p.url}" class="project-link-icon" aria-label="Open ${p.name} live site" onclick="event.stopPropagation()" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h7v7M21 3l-9 9M5 5h5M5 5v14h14v-5"/></svg>
@@ -2531,13 +2578,13 @@ html.dark .demo-pw-pill{background:rgba(255,255,255,0.04);}
     
     // If image exists, display it; otherwise show gradient background
     if(imageUrl){
-      return `<img src="${imageUrl}" alt="${p.name} ${isMobile ? 'mobile' : 'desktop'} preview" style="width:100%; height:auto; display:block;" />`;
+      return `<img src="${imageUrl}" alt="${p.name} ${isMobile ? 'mobile' : 'desktop'} preview" loading="lazy" />`;
     }
     
     // Fallback: SVG gradient placeholder
     const w = isMobile ? 300 : 800;
     const h = isMobile ? 640 : 500;
-    return `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" style="width:100%; display:block;">
+    return `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
       <defs><linearGradient id="dv-${p.slug}-${mode}" x1="0" y1="0" x2="1" y2="1">
         <stop offset="0%" stop-color="${p.grad[0]}"/><stop offset="100%" stop-color="${p.grad[1]}"/>
       </linearGradient></defs>
